@@ -9,7 +9,7 @@ install:
  - pip install coverage
  - pip install coveralls
 
-script: python3 -m unittest
+script: coverage run -m unittest
 
 after_success:
     coveralls
