@@ -5,4 +5,11 @@ python:
   - "3.6"      # current default Python on Travis CI
   - "3.7"
   - "3.8"
+install:
+ - pip install coverage
+ - pip install coveralls
+
 script: python3 -m unittest
+
+after_success:
+    coveralls
