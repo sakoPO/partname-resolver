@@ -1,5 +1,7 @@
 # partname-resolver
-Electronic component name resolver
+![Build status](https://travis-ci.com/sakoPO/partname-resolver.svg?branch=master)
+
+Electronic component name resolver 
 
 Simple python 3 script for decoding component parameters from its manufacturer part number.
 Designed to work with Capacitors and Resistors.
