@@ -270,6 +270,35 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
                               note="Multilayer ceramic capacitor")
         self.assertEqual(component, part)
 
+    def test_aishi(self):
+        part = capacitors_partname_decoder.resolve("EWH1EM221F11OT")
+        self.assertIsNotNone(part)
+        component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
+                              manufacturer="Aishi",
+                              partnumber="EWH1EM221F11OT",
+                              series="WH",
+                              capacitance="220uF",
+                              voltage="25V",
+                              tolerance={'min': "-20%", 'max': '+20%'},
+                              dielectric_type="Aluminium oxide",
+                              case="8x11",
+                              note="Miniature aluminium electrolytic capacitors")
+        self.assertEqual(component, part)
+
+        part = capacitors_partname_decoder.resolve("EWH1KM2R2D11OT")
+        self.assertIsNotNone(part)
+        component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
+                              manufacturer="Aishi",
+                              partnumber="EWH1KM2R2D11OT",
+                              series="WH",
+                              capacitance="2.2uF",
+                              voltage="100V",
+                              tolerance={'min': "-20%", 'max': '+20%'},
+                              dielectric_type="Aluminium oxide",
+                              case="5x11",
+                              note="Miniature aluminium electrolytic capacitors")
+        self.assertEqual(component, part)
+
 
 if __name__ == "__main__":
     unittest.main()

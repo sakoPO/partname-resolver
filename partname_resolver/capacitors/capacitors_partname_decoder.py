@@ -1,5 +1,5 @@
 from . import samsung_decoder, murata_decoder, yaego_decoder, vishay_decoder, \
-    nichicon_decoder, kemet_decoder, avx_decoder, samwha_decoder, taiyo_yuden_decoder
+    nichicon_decoder, kemet_decoder, avx_decoder, samwha_decoder, taiyo_yuden_decoder, aishi_decoder
 
 
 def resolve(partname):
@@ -28,5 +28,8 @@ def resolve(partname):
     if component:
         return component
     component = taiyo_yuden_decoder.resolve(partname)
+    if component:
+        return component
+    component = aishi_decoder.resolve(partname)
     if component:
         return component
