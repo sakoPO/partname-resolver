@@ -39,6 +39,8 @@ class CapacitanceTestCase(unittest.TestCase):
 
     def test_equality(self):
         self.assertEqual(Capacitance(Decimal('100')), Capacitance(Decimal('100')))
+        self.assertEqual(Capacitance(Decimal('100')), '100F')
+        self.assertEqual(Capacitance(Decimal('100E-9')), '100nF')
 
 
 if __name__ == '__main__':
