@@ -12,6 +12,12 @@ class CapacitanceToleranceTestCase(unittest.TestCase):
         self.assertEqual(str(Tolerance('-1pF', '+1pF')), "\u00B11pF")
         self.assertEqual(str(Tolerance('-1pF', '+2pF')), "-1pF +2pF")
 
+        with self.assertRaises(ValueError):
+            Tolerance('-20%')
+
+    def test_equality_operator(self):
+        self.assertEqual(Tolerance('-20%', '20%'), Tolerance('20%'))
+
 
 if __name__ == '__main__':
     unittest.main()
