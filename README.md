@@ -16,3 +16,13 @@ This script can extract parameters like:
 - Component Case
 
 
+### Supported capacitors series
+- Aishi: WH
+- AVX: standard product for chip capacitor
+- Kemet:
+- Murata: GRT, GCM, GC3, GCJ, GCD, GCE, KCM, KC3, KCA, GCG
+- Nichicon: VZ, VR, KA, CS, CY
+- Samsung: CL
+- Samwha: CA, RC, RD, SD
+- Vishay: VJ
+- Yaego: CC
