@@ -418,5 +418,36 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
                                       note="7mmL, Wide temperature range")
                 self.assertEqual(component, part)
 
+    def test_yaego(self):
+        # ---------------- CC -----------------
+        with self.subTest("CC0402JRNPO9BN330"):
+            part = capacitors_partname_decoder.resolve("CC0402JRNPO9BN330")
+            self.assertIsNotNone(part)
+            component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
+                                  manufacturer="Yaego",
+                                  partnumber="CC0402JRNPO9BN330",
+                                  series="CC",
+                                  capacitance="33pF",
+                                  voltage="50V",
+                                  tolerance={'min': "-5%", 'max': '+5%'},
+                                  dielectric_type="NP0",
+                                  case="0402",
+                                  note="Paper/PE taping reel; Reel 7 inch")
+            self.assertEqual(component, part)
+        with self.subTest("CC1206MKX7RDBB102"):
+            part = capacitors_partname_decoder.resolve("CC1206MKX7RDBB102")
+            self.assertIsNotNone(part)
+            component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
+                                  manufacturer="Yaego",
+                                  partnumber="CC1206MKX7RDBB102",
+                                  series="CC",
+                                  capacitance="1nF",
+                                  voltage="2000V",
+                                  tolerance={'min': "-20%", 'max': '+20%'},
+                                  dielectric_type="X7R",
+                                  case="1206",
+                                  note="Blister taping reel; Reel 7 inch")
+            self.assertEqual(component, part)
+
 if __name__ == "__main__":
     unittest.main()

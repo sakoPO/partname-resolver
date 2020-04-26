@@ -59,10 +59,12 @@ def build_regexpr(product_id):
 
 
 def decode_match(match):
+    partname = match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
+                         5) + match.group(6) + match.group(7)
+    partname += match.group(8) if match.group(8) is not None else ""
     return Capacitor(capacitor_type=Capacitor.Type.MLCC,
                      manufacturer="Yaego",
-                     partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
-                         5) + match.group(6) + match.group(7),
+                     partnumber=partname,
                      series='CC',
                      capacitance=capacitance_string_to_farads(match.group(8)),
                      voltage=voltage[match.group(6)],
