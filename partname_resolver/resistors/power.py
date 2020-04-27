@@ -27,6 +27,10 @@ class Power:
     def get_value(self):
         return self.power
 
+    def get_value_as(self, prefix):
+        """prefix can be 'mW', 'W', 'kW' etc."""
+        return self.power / Power.multiply[prefix]
+
     def __str__(self):
         return self.__convert_decimal_power_to_string()
 
