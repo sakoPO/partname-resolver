@@ -1,6 +1,7 @@
 from .common import *
 from .resistor import Resistor
 from .tolerance import Tolerance
+from ..units.temperature import TemperatureRange
 import re
 from decimal import Decimal
 
@@ -46,6 +47,10 @@ maximum_working_voltage = {'0603': '200V',
                            '2010': '2000V',
                            '2512': '3000V'}
 
+working_temperature_range = {'CAT16': TemperatureRange(Decimal('-55'), Decimal('125')),
+                             'CAY16': TemperatureRange(Decimal('-55'), Decimal('125')),
+                             'CHV': TemperatureRange(Decimal('-55'), Decimal('155'))}
+
 
 def build_regexpr_CHV():
     series_group = '(CHV)'  # 1
@@ -66,6 +71,7 @@ def decode_match_CHV(match):
                     manufacturer="Bourns",
                     partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
                         5) + match.group(6) + match.group(7) + match.group(8) + match.group(9),
+                    working_temperature_range=working_temperature_range[match.group(1)],
                     series=match.group(1),
                     resistance=resistance_string_to_ohm(match.group(7)),
                     power=power[match.group(2)],
@@ -90,6 +96,7 @@ def decode_match(match):
                     manufacturer="Bourns",
                     partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
                         5) + match.group(6),
+                    working_temperature_range=working_temperature_range[match.group(1)],
                     series=match.group(1),
                     resistance=resistance_string_to_ohm(match.group(3)),
                     power=Decimal('0.125') if match.group(4) + match.group(5) == "J2" else Decimal('0.25'),

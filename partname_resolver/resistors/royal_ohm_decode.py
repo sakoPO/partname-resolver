@@ -1,6 +1,7 @@
 from .common import *
 from .resistor import Resistor
 from .tolerance import Tolerance
+from ..units.temperature import TemperatureRange
 import re
 from decimal import Decimal
 
@@ -127,6 +128,7 @@ def decode_match(match):
         1) in array else Resistor.Type.ThickFilmResistor,
                     manufacturer="Royal Ohm",
                     partnumber=partnumber,
+                    working_temperature_range=TemperatureRange(Decimal('-55'), Decimal('155')),
                     series='',
                     resistance=resistance_string_to_ohm(match.group(4)),
                     power=power[match.group(2)],

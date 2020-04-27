@@ -1,6 +1,7 @@
 from .common import *
 from .resistor import Resistor
 from .tolerance import Tolerance
+from ..units.temperature import TemperatureRange
 import re
 from decimal import Decimal
 
@@ -202,6 +203,7 @@ def decode_match_PAT_PNM(match):
                     manufacturer="Vishay",
                     partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
                         5) + match.group(6) + match.group(7),
+                    working_temperature_range=TemperatureRange(Decimal('-55'), Decimal('155')),
                     series=series_name,
                     resistance=resistance_string_to_ohm(match.group(4)),
                     power=power[series_name][match.group(2)],
@@ -232,6 +234,7 @@ def decode_match(match):
                     partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
                         5) + match.group(6),
                     series=series_name,
+                    working_temperature_range=TemperatureRange(Decimal('-55'), Decimal('155')),
                     resistance=resistance_string_to_ohm(match.group(3)),
                     power=power[series_name + is_e3][match.group(2)],
                     max_working_voltage=max_working_voltage[series_name + is_e3][match.group(2)],
