@@ -1,27 +1,51 @@
-from .capacitance import Capacitance
+from .capacitance import Capacitance, CapacitanceRange
 from .tolerance import Tolerance
 from enum import Enum
 
 
 class Capacitor:
     class Type(Enum):
-        MLCC = "Multi layer ceramic capacitor"
+        MLCC = "MLCC"
         ElectrolyticAluminium = "Aluminium Electrolytic Capacitor"
+        ElectrolyticTantalum = "Tantalum Capacitor"
+        CeramicTrimmer = "Ceramic Trimmer"
 
-    def __init__(self, capacitor_type, manufacturer, partnumber, series, capacitance, voltage, tolerance, dielectric_type, case, note):
+    def __init__(self, capacitor_type, manufacturer, partnumber, series, capacitance, voltage, tolerance,
+                 dielectric_type, case, note):
         self.type = capacitor_type
         self.manufacturer = manufacturer
         self.partnumber = partnumber
         self.series = series
-        self.capacitance = Capacitance(capacitance)
+        if isinstance(capacitance, CapacitanceRange):
+            self.capacitance = capacitance
+        else:
+            self.capacitance = Capacitance(capacitance)
         self.voltage = voltage
         if isinstance(tolerance, Tolerance):
             self.tolerance = tolerance
+        elif tolerance is None:
+            self.tolerance = "Missing tolerance parameter"
         else:
             self.tolerance = Tolerance(tolerance['min'], tolerance['max'])
         self.dielectric_type = dielectric_type
         self.case = case
         self.note = note
+
+    def get_description(self):
+        prefix = {Capacitor.Type.MLCC: "Capacitor MLCC",
+                  Capacitor.Type.ElectrolyticAluminium: "Capacitor Electrolytic",
+                  Capacitor.Type.ElectrolyticTantalum: "Capacitor Tantalum",
+                  Capacitor.Type.CeramicTrimmer: "Capacitor Ceramic Trimmer"}
+        description = prefix[self.type]
+        description += ' ' + str(self.capacitance)
+        if isinstance(self.tolerance, Tolerance):
+            description += ' ' + str(self.tolerance)
+        if self.voltage is not None:
+            description += ' ' + str(self.voltage) + 'V'
+        if self.dielectric_type is not None:
+            description += ' ' + self.dielectric_type
+        description += ' ' + self.case
+        return description
 
     def from_dict(self, dictionary):
         self.manufacturer = dictionary["Manufacturer"]
