@@ -31,7 +31,7 @@ class TemperatureRange:
         return self.min == other.min and self.max == other.max
 
     def __str__(self):
-        return str(self.min) + "..." + str(self.max)
+        return str(self.min)[:-1] + ".." + str(self.max)
 
     def __repr__(self):
         return self.__str__()
