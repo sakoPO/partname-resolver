@@ -1,5 +1,5 @@
 from decimal import Decimal
-from .resistance import Resistance
+from partname_resolver.units.capacitance import Capacitance
 
 
 class Tolerance:
@@ -13,7 +13,7 @@ class Tolerance:
                 self.max = abs(self.min)
             else:
                 self.is_relative = False
-                self.min = Resistance(tolerance_min)
+                self.min = Capacitance(tolerance_min)
                 self.max = self.min
         else:
             if tolerance_min.find('%') != -1 and tolerance_max.find('%') != -1:
@@ -23,8 +23,8 @@ class Tolerance:
             else:
                 self.is_relative = False
                 if tolerance_min[0] == '-' and tolerance_max[0] == '+':
-                    self.min = Resistance(tolerance_min[1:len(tolerance_min)])
-                    self.max = Resistance(tolerance_max[1:len(tolerance_max)])
+                    self.min = Capacitance(tolerance_min[1:len(tolerance_min)])
+                    self.max = Capacitance(tolerance_max[1:len(tolerance_max)])
                 else:
                     raise ValueError
 

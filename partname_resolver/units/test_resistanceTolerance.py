@@ -1,5 +1,5 @@
 import unittest
-from .tolerance import Tolerance
+from partname_resolver.units.resistanceTolerance import Tolerance
 
 
 class ResistanceToleranceTestCase(unittest.TestCase):

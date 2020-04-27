@@ -1,5 +1,5 @@
 import unittest
-from .power import Power
+from partname_resolver.units.power import Power
 from decimal import Decimal
 
 

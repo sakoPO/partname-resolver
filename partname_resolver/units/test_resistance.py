@@ -1,6 +1,6 @@
 import unittest
 from decimal import Decimal
-from .resistance import Resistance
+from partname_resolver.units.resistance import Resistance
 
 
 class ResistanceTestCase(unittest.TestCase):
