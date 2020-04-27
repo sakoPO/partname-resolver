@@ -1,7 +1,7 @@
 # based on https://www.yuden.co.jp/productdata/catalog/mlcc_all_e.pdf
 
 from .capacitor import Capacitor
-from .tolerance import Tolerance
+from partname_resolver.units.capacitanceTolerance import Tolerance
 from .common import *
 # from ..case.chip import Chip
 import re

@@ -1,5 +1,5 @@
 from .capacitor import Capacitor
-from .tolerance import Tolerance
+from partname_resolver.units.capacitanceTolerance import Tolerance
 from .common import *
 import re
 

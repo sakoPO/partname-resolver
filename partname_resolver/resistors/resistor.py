@@ -1,8 +1,8 @@
 from enum import Enum
-from .tolerance import Tolerance
-from .resistance import Resistance
-from .power import Power
-from ..units.temperature import Temperature, TemperatureRange
+from partname_resolver.units.resistanceTolerance import Tolerance
+from partname_resolver.units.resistance import Resistance
+from partname_resolver.units.power import Power
+
 
 class Resistor:
     class Type(Enum):

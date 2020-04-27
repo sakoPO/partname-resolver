@@ -1,5 +1,5 @@
 import unittest
-from .capacitance import Capacitance, CapacitanceRange
+from partname_resolver.units.capacitance import Capacitance, CapacitanceRange
 from decimal import Decimal
 
 

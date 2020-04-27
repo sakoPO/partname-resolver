@@ -1,9 +1,9 @@
 import unittest
-from partname_resolver.resistors.tolerance import Tolerance
+from partname_resolver.units.resistanceTolerance import Tolerance
 from partname_resolver.resistors import resistors_partname_decoder
 from partname_resolver.resistors.resistor import Resistor
-from partname_resolver.resistors.resistance import Resistance
-from partname_resolver.resistors.power import Power
+from partname_resolver.units.resistance import Resistance
+from partname_resolver.units.power import Power
 from partname_resolver.units.temperature import TemperatureRange
 from decimal import Decimal
 

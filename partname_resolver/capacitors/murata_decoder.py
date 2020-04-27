@@ -1,6 +1,6 @@
 # based on https://search.murata.co.jp/Ceramy/image/img/A01X/partnumbering_e_02.pdf
 from .capacitor import Capacitor
-from .tolerance import Tolerance
+from partname_resolver.units.capacitanceTolerance import Tolerance
 from .common import *
 import re
 

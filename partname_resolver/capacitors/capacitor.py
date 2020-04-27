@@ -1,5 +1,5 @@
-from .capacitance import Capacitance, CapacitanceRange
-from .tolerance import Tolerance
+from partname_resolver.units.capacitance import Capacitance, CapacitanceRange
+from partname_resolver.units.capacitanceTolerance import Tolerance
 from enum import Enum
 
 

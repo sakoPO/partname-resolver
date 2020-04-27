@@ -1,6 +1,6 @@
 from .common import *
 from .capacitor import Capacitor
-from .tolerance import Tolerance
+from partname_resolver.units.capacitanceTolerance import Tolerance
 import re
 
 size = {'0201': '0201',
