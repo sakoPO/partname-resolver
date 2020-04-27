@@ -79,7 +79,8 @@ packing_type = {'T0': '100 min., 100 mult',
 
 packing_type_TNPWe3 = ['ED', 'EP', 'EI', 'EN', 'EA', 'EC']
 
-special = {'P': 'Semi-Precision'}
+special = {'P': 'Semi-Precision',
+           'BC': 'Unknown'}
 
 termination = {'B': 'wraparound Sn/Pb solder63 % Sn/ 37 % Pb',
                'S': 'wraparound lead (Pb)-free solder w/nickel barrier'}
@@ -220,7 +221,7 @@ def build_regexpr():
     tolerance_group = build_group(tolerance)  # 4
     temperature_coefficient_group = build_group(temperature_coefficient)  # 5
     packing_type_group = build_group(packing_type)  # 6
-    special_group = build_group(special)
+    special_group = build_group(special)  # 7
 
     return series_group + size_group + resistance_group + tolerance_group + temperature_coefficient_group + \
            packing_type_group + special_group + '?'
@@ -228,11 +229,12 @@ def build_regexpr():
 
 def decode_match(match):
     series_name = match.group(1)
+    partnumber = match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(5) + match.group(6)
+    partnumber += match.group(7) if match.group(7) is not None else ''
     is_e3 = 'e3' if series_name == "TNPW" and match.group(6) in packing_type_TNPWe3 else ''
     return Resistor(resistor_type=resistor_type[match.group(1)],
                     manufacturer="Vishay",
-                    partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
-                        5) + match.group(6),
+                    partnumber=partnumber,
                     series=series_name,
                     working_temperature_range=TemperatureRange(Decimal('-55'), Decimal('155')),
                     resistance=resistance_string_to_ohm(match.group(3)),
