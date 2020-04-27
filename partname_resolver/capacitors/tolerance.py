@@ -39,9 +39,9 @@ class Tolerance:
             if abs(self.min) == abs(self.max):
                 return '\u00B1' + str(abs(self.min)) + "%"
             else:
-                return str(self.min) + "% +" + str(self.max) + "%"
+                return str(self.min) + "%...+" + str(self.max) + "%"
         else:
             if self.min == self.max:
                 return '\u00B1' + str(self.min)
             else:
-                return "-" + str(self.min) + " +" + str(self.max)
+                return "-" + str(self.min) + "...+" + str(self.max)
