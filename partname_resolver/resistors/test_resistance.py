@@ -26,6 +26,7 @@ class ResistanceTestCase(unittest.TestCase):
         self.assertEqual(Resistance("1m5").get_value(), Decimal('1.5') * Decimal('1E-3'))
 
     def test_resistance_to_str_conversion(self):
+        self.assertEqual(str(Resistance(Decimal('0'))), "0Ω")
         self.assertEqual(str(Resistance(Decimal('2.2E6'))), "2.2MΩ")
         self.assertEqual(str(Resistance(Decimal('4E3'))), "4kΩ")
         self.assertEqual(str(Resistance(Decimal('100'))), "100Ω")

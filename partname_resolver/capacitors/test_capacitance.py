@@ -1,5 +1,5 @@
 import unittest
-from .capacitance import Capacitance
+from .capacitance import Capacitance, CapacitanceRange
 from decimal import Decimal
 
 
@@ -41,6 +41,10 @@ class CapacitanceTestCase(unittest.TestCase):
         self.assertEqual(Capacitance(Decimal('100')), Capacitance(Decimal('100')))
         self.assertEqual(Capacitance(Decimal('100')), '100F')
         self.assertEqual(Capacitance(Decimal('100E-9')), '100nF')
+
+    def test_capacitance_range(self):
+        self.assertEqual("1pF...1nF", str(CapacitanceRange(Capacitance("1pF"), Capacitance("1nF"))))
+        self.assertEqual("1pF...1nF", str(CapacitanceRange("1pF", "1nF")))
 
 
 if __name__ == '__main__':
