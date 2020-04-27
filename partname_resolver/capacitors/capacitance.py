@@ -29,6 +29,7 @@ class Capacitance:
         elif isinstance(capacitance, str):
             self.capacitance = self.__convert_str_capacitance_to_decimal_farads(capacitance)
         else:
+            print(capacitance)
             raise TypeError
 
     def get_value(self):
@@ -74,3 +75,22 @@ class Capacitance:
             if Decimal('1000.0') > value >= Decimal('0.0'):
                 value = value.quantize(Decimal('.01'))
                 return str(value).rstrip('0').rstrip('.') + str(key)
+
+
+class CapacitanceRange:
+    def __init__(self, min, max):
+        if isinstance(min, Capacitance):
+            self.min = min
+        else:
+            self.min = Capacitance(min)
+        if isinstance(max, Capacitance):
+            self.max = max
+        else:
+            self.max = Capacitance(max)
+
+    def __str__(self):
+        return str(self.min) + '...' + str(self.max)
+
+    def __repr__(self):
+        return self.__str__()
+
