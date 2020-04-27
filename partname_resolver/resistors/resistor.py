@@ -27,8 +27,8 @@ class Resistor:
     def get_description(self):
         prefix = {Resistor.Type.ThinFilmResistor: "Resistor",
                   Resistor.Type.ThickFilmResistor: "Resistor",
-                  Resistor.Type.ThinFilmResistorArray: "Resistor",
-                  Resistor.Type.ThickFilmResistorArray: "Resistor"}
+                  Resistor.Type.ThinFilmResistorArray: "Resistor array",
+                  Resistor.Type.ThickFilmResistorArray: "Resistor array"}
         description = prefix[self.type]
         description += ' ' + str(self.resistance)
         if isinstance(self.tolerance, Tolerance):
