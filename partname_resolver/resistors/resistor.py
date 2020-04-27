@@ -2,7 +2,7 @@ from enum import Enum
 from .tolerance import Tolerance
 from .resistance import Resistance
 from .power import Power
-
+from ..units.temperature import Temperature, TemperatureRange
 
 class Resistor:
     class Type(Enum):
@@ -11,11 +11,12 @@ class Resistor:
         ThinFilmResistorArray = "Thin Film Resistor Array"
         ThickFilmResistorArray = "Thick Film Resistor Array"
 
-    def __init__(self, resistor_type, manufacturer, partnumber, series, resistance, tolerance, power,
-                 max_working_voltage, case, note):
+    def __init__(self, resistor_type, manufacturer, partnumber, working_temperature_range, series, resistance,
+                 tolerance, power, max_working_voltage, case, note):
         self.type = resistor_type  # should be moved to parts common base class
         self.manufacturer = manufacturer  # should be moved to parts common base class
         self.partnumber = partnumber  # should be moved to parts common base class
+        self.working_temperature_range = working_temperature_range  # should be moved to parts common base class
         self.series = series
         self.resistance = Resistance(resistance)
         self.tolerance = tolerance
@@ -37,6 +38,8 @@ class Resistor:
             description += ' ' + str(self.power)
         if self.max_working_voltage is not None:
             description += ' ' + self.max_working_voltage + 'V'
+        if self.working_temperature_range is not None:
+            description += ' ' + str(self.working_temperature_range)
         description += ' ' + self.case
         return description
 

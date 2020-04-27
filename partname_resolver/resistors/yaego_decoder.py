@@ -1,6 +1,7 @@
 from .common import *
 from .resistor import Resistor
 from .tolerance import Tolerance
+from ..units.temperature import TemperatureRange
 import re
 from decimal import Decimal
 
@@ -84,6 +85,7 @@ def decode_match(match):
                     manufacturer="Yaego",
                     partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
                         5) + match.group(6) + match.group(7) + match.group(8),
+                    working_temperature_range=TemperatureRange(Decimal('-55'), Decimal('155')),
                     series=match.group(1),
                     resistance=resistance_string_to_ohm(match.group(7)),
                     power=power[match.group(2)],
