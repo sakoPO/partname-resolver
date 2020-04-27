@@ -12,10 +12,10 @@ class TemperatureTestCase(unittest.TestCase):
         self.assertEqual(Temperature(Decimal(100)), Temperature(Decimal(100)))
 
     def test_temperature_range_to_string_conversion(self):
-        self.assertEqual("-100℃...200℃", str(TemperatureRange(Decimal(-100), Decimal(200))))
-        self.assertEqual("10℃...200℃", str(TemperatureRange(Decimal(10), Decimal(200))))
+        self.assertEqual("-100..200℃", str(TemperatureRange(Decimal(-100), Decimal(200))))
+        self.assertEqual("10..200℃", str(TemperatureRange(Decimal(10), Decimal(200))))
 
-        self.assertEqual("0℃...200℃", str(TemperatureRange(Temperature(Decimal(0)), Decimal(200))))
+        self.assertEqual("0..200℃", str(TemperatureRange(Temperature(Decimal(0)), Decimal(200))))
 
 
 

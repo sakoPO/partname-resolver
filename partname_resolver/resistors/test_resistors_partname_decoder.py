@@ -39,7 +39,7 @@ class ResistorsPartnameResolverTestCase(unittest.TestCase):
     def test_yaego(self):
         decoded = resistors_partname_decoder.resolve("RC0402FR-07100RL")
         self.assertEqual(Resistor.Type.ThickFilmResistor, decoded.type)
-        self.assertEqual('Yaego', decoded.manufacturer)
+        self.assertEqual('Yageo', decoded.manufacturer)
         self.assertEqual('RC0402FR-07100RL', decoded.partnumber)
         self.assertEqual(TemperatureRange(Decimal('-55'), Decimal('155')), decoded.working_temperature_range)
         self.assertEqual('RC', decoded.series)
