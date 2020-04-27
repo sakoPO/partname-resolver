@@ -82,7 +82,7 @@ def build_regexpr():
 
 def decode_match(match):
     return Resistor(resistor_type=resistor_type[match.group(1)],
-                    manufacturer="Yaego",
+                    manufacturer="Yageo",
                     partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
                         5) + match.group(6) + match.group(7) + match.group(8),
                     working_temperature_range=TemperatureRange(Decimal('-55'), Decimal('155')),
