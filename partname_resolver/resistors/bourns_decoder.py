@@ -54,7 +54,7 @@ def build_regexpr_CHV():
     tolerance_group = build_group(tolerance)  # 4
     tcr_group = build_group(tcr)  # 5
     separator2 = '(-)'  # 6
-    resistance_group = '(\d{3}|\d{2}R|\d{1}R\d{1}])'  # 7
+    resistance_group = '(\d{3,4}|\d{2}R|\d{1}R\d{1}])'  # 7
     packing_group = '(E)'  # 8
     termination_group = build_group(termination)  # 9
     return series_group + size_group + separator + tolerance_group + tcr_group + separator2 + resistance_group + \
