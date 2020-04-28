@@ -471,7 +471,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
             part = capacitors_partname_decoder.resolve("CC0402JRNPO9BN330")
             self.assertIsNotNone(part)
             component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
-                                  manufacturer="Yaego",
+                                  manufacturer="Yageo",
                                   partnumber="CC0402JRNPO9BN330",
                                   working_temperature_range=TemperatureRange('-55', '125'),
                                   series="CC",
@@ -486,7 +486,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
             part = capacitors_partname_decoder.resolve("CC1206MKX7RDBB102")
             self.assertIsNotNone(part)
             component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
-                                  manufacturer="Yaego",
+                                  manufacturer="Yageo",
                                   partnumber="CC1206MKX7RDBB102",
                                   working_temperature_range=TemperatureRange('-55', '125'),
                                   series="CC",
