@@ -71,7 +71,7 @@ def decode_match(match):
         5) + match.group(6) + match.group(7)
     partname += match.group(8) if match.group(8) is not None else ""
     return Capacitor(capacitor_type=Capacitor.Type.MLCC,
-                     manufacturer="Yaego",
+                     manufacturer="Yageo",
                      partnumber=partname,
                      working_temperature_range=operating_temperature_range[match.group(5)],
                      series='CC',
