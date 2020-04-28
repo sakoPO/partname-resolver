@@ -43,7 +43,7 @@ def kemet(partname):
         return value * Decimal('10') ** mul * Decimal('10') ** Decimal('-12')
 
     if match:
-        return Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
+        return Capacitor(capacitor_type=Capacitor.Type.MLCC,
                          manufacturer="Kemet",
                          partnumber=partname,
                          working_temperature_range=operating_temperature_range[match.group(5)],
@@ -68,7 +68,7 @@ def kemet(partname):
     match = re.match(
         r'(C)(0201|0402|0603|0805|1206|1210|1808|1812|1825|2220|2225)(C)(\d{3})(J|K|M)(9|8|4|3|6|5|1|2|A)(R)', partname)
     if match:
-        return Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
+        return Capacitor(capacitor_type=Capacitor.Type.MLCC,
                          manufacturer="Kemet",
                          partnumber=partname,
                          working_temperature_range=operating_temperature_range[match.group(5)],
