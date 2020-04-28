@@ -1,5 +1,6 @@
 from .capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
+from ..units.temperature import TemperatureRange
 from .common import *
 import re
 
@@ -49,6 +50,11 @@ case_diameter = {'03': '3mm',
                  '22': '22mm',
                  '25': '25.5mm'}
 
+operating_temperature_range = {'CA': lambda voltage : TemperatureRange('-55', '105'),
+                               'RC': lambda voltage : TemperatureRange('-55', '105'),
+                               'RD': lambda voltage : TemperatureRange('-55', '105') if voltage < 101 else TemperatureRange('-40', '105') if voltage < 351 else TemperatureRange('-25', '105'),
+                               'SD': lambda voltage : TemperatureRange('-40', '85') if voltage < 101 else TemperatureRange('-25', '85')}
+
 
 def build_regexpr():
     series_name_group = build_group(series)  # 1
@@ -64,13 +70,15 @@ def build_regexpr():
 
 
 def decode_match(match):
+    voltage_str = voltage[match.group(2)]
     return Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
                      manufacturer="Samwha",
                      partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
                          5) + match.group(6) + match.group(7),
+                     working_temperature_range=operating_temperature_range[match.group(1)](Decimal(voltage_str[:-3])),
                      series=match.group(1),
                      capacitance=capacitance_string_to_farads(match.group(3)),
-                     voltage=voltage[match.group(2)],
+                     voltage=voltage_str,
                      tolerance=tolerance[match.group(4)],
                      dielectric_type="Aluminium oxide",
                      case=case_diameter[match.group(5)],

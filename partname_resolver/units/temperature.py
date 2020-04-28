@@ -4,7 +4,7 @@ from decimal import Decimal
 class Temperature:
     def __init__(self, temperature):
         if isinstance(temperature, str):
-            pass
+            self.temperature = Decimal(temperature)
         else:
             self.temperature = Decimal(temperature)
 

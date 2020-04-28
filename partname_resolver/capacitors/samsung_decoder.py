@@ -1,7 +1,7 @@
 from .capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
+from ..units.temperature import TemperatureRange
 from .common import *
-# from ..case.chip import Chip
 import re
 
 size = {'03': '0201',
@@ -104,6 +104,18 @@ packing_type = {'B': 'Bulk',
                 'S': 'Embossing 10"',
                 'G': 'Unknown'}
 
+operating_temperature_range = {'C': TemperatureRange('-55', '125'),
+                               'P': TemperatureRange('-55', '125'),
+                               'R': TemperatureRange('-55', '125'),
+                               'S': TemperatureRange('-55', '125'),
+                               'T': TemperatureRange('-55', '125'),
+                               'U': TemperatureRange('-55', '125'),
+                               'L': TemperatureRange('-55', '125'),
+                               'A': TemperatureRange('-55', '85'),
+                               'B': TemperatureRange('-55', '125'),
+                               'X': TemperatureRange('-55', '105'),
+                               'F': TemperatureRange('-30', '85')}
+
 
 def build_regexpr(product_id):
     product_series_group = '(' + product_id + ')'  # 1
@@ -116,7 +128,7 @@ def build_regexpr(product_id):
     plating_group = build_group(plating)  # 8
     samsung_control_code_group = build_group(samsung_control_code)  # 9
     reserved_for_future_use_group = '(N)'  # 10
-    packing_type_group = build_group(packing_type) # 11
+    packing_type_group = build_group(packing_type)  # 11
 
     return product_series_group + dimensions_group + temperature_group + capacitance_group + tolerance_group + voltage_group + thickness_group + plating_group + samsung_control_code_group + reserved_for_future_use_group + packing_type_group + '?'
 
@@ -127,6 +139,7 @@ def decode_match(match):
                      partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(5) +
                                 match.group(6) + match.group(7) + match.group(8) + match.group(9) + match.group(10) +
                                 match.group(11),
+                     working_temperature_range=operating_temperature_range[match.group(3)],
                      series="CL",
                      capacitance=capacitance_string_to_farads(match.group(4)),
                      voltage=voltage[match.group(6)],

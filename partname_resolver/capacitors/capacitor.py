@@ -10,11 +10,12 @@ class Capacitor:
         ElectrolyticTantalum = "Tantalum Capacitor"
         CeramicTrimmer = "Ceramic Trimmer"
 
-    def __init__(self, capacitor_type, manufacturer, partnumber, series, capacitance, voltage, tolerance,
-                 dielectric_type, case, note):
+    def __init__(self, capacitor_type, manufacturer, partnumber, working_temperature_range, series, capacitance,
+                 voltage, tolerance, dielectric_type, case, note):
         self.type = capacitor_type
         self.manufacturer = manufacturer
         self.partnumber = partnumber
+        self.working_temperature_range = working_temperature_range  # should be moved to parts common base class
         self.series = series
         if isinstance(capacitance, CapacitanceRange):
             self.capacitance = capacitance
@@ -77,12 +78,15 @@ class Capacitor:
         pass
 
     def __repr__(self):
+        working_temperature_range = str(self.working_temperature_range) + " " if self.working_temperature_range is not None else ''
         return str(self.manufacturer) + " " + str(self.partnumber) + " " + str(self.series) + " " + str(
             self.capacitance) + " " + str(self.voltage) + " " + str(self.tolerance) + " " + str(
-            self.dielectric_type) + " " + str(self.case) + " " + str(self.note)
+            self.dielectric_type) + " " + working_temperature_range + str(self.case) + " " + str(self.note)
 
     def __eq__(self, other):
         return self.manufacturer == other.manufacturer and self.partnumber == other.partnumber and \
                self.series == other.series and self.capacitance == other.capacitance and \
                self.voltage == other.voltage and self.tolerance == other.tolerance and \
-               self.dielectric_type == other.dielectric_type and self.case == other.case and self.note == other.note
+               self.dielectric_type == other.dielectric_type and self.case == other.case and\
+               self.note == other.note and self.working_temperature_range == other.working_temperature_range
+

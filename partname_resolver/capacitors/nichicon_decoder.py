@@ -1,5 +1,6 @@
 from .capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
+from ..units.temperature import TemperatureRange
 from .common import *
 import re
 
@@ -49,6 +50,13 @@ configuration = {'DD': '5',
                  'RD': '20 - 25'}
 
 
+operating_temperature_range = {'VZ': lambda voltage : TemperatureRange('-55', '105') if voltage < 101 else TemperatureRange('-40', '105') if voltage < 401 else TemperatureRange('-25', '105'),
+                               'VR': lambda voltage : TemperatureRange('-40', '85') if voltage < 401 else TemperatureRange('-25', '85'),
+                               'KA': lambda voltage: TemperatureRange('-55', '105'),
+                               'CS': lambda voltage : TemperatureRange('-40', '105') if voltage < 401 else TemperatureRange('-25', '105'),
+                               'CY': lambda voltage : TemperatureRange('-40', '105') if voltage < 401 else TemperatureRange('-25', '105')}
+
+
 def build_regexpr(product_id):
     product_series_group = '(' + product_id + ')'  # 1
     series_name_group = build_group(series)  # 2
@@ -61,12 +69,15 @@ def build_regexpr(product_id):
 
 
 def decode_match(match):
+    voltage_str = voltage[match.group(3)]
     return Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
                      manufacturer="Nichicon",
-                     partnumber=match.group(1)+match.group(2)+match.group(3)+match.group(4)+match.group(5)+match.group(6),
+                     partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
+                         5) + match.group(6),
+                     working_temperature_range=operating_temperature_range[match.group(2)](Decimal(voltage_str[:-3])),
                      series=match.group(2),
                      capacitance=capacitance_string_to_farads(match.group(4)) * Decimal('1000000'),
-                     voltage=voltage[match.group(3)],
+                     voltage=voltage_str,
                      tolerance=tolerance[match.group(5)],
                      dielectric_type="Aluminium oxide",
                      case=configuration[match.group(6)],

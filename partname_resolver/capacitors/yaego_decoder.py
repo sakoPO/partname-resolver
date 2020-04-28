@@ -1,5 +1,6 @@
 from .capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
+from ..units.temperature import TemperatureRange
 from .common import *
 import re
 
@@ -44,6 +45,13 @@ dielectric_type = {'COG': 'C0G',
                    'X8R': 'X8R',
                    'Y5V': 'Y5V'}
 
+operating_temperature_range = {'COG': TemperatureRange('-55', '125'),
+                               'NPO': TemperatureRange('-55', '125'),
+                               'X5R': TemperatureRange('-55', '85'),
+                               'X7R': TemperatureRange('-55', '125'),
+                               'X8R': TemperatureRange('-55', '150'),
+                               'Y5V': TemperatureRange('-30', '85')}
+
 
 def build_regexpr(product_id):
     product_series_group = '(' + product_id + ')'  # 1
@@ -60,11 +68,12 @@ def build_regexpr(product_id):
 
 def decode_match(match):
     partname = match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
-                         5) + match.group(6) + match.group(7)
+        5) + match.group(6) + match.group(7)
     partname += match.group(8) if match.group(8) is not None else ""
     return Capacitor(capacitor_type=Capacitor.Type.MLCC,
                      manufacturer="Yaego",
                      partnumber=partname,
+                     working_temperature_range=operating_temperature_range[match.group(5)],
                      series='CC',
                      capacitance=capacitance_string_to_farads(match.group(8)),
                      voltage=voltage[match.group(6)],

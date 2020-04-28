@@ -1,5 +1,6 @@
 from .capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
+from ..units.temperature import TemperatureRange
 from .common import *
 import re
 
@@ -113,31 +114,50 @@ case_size_length = {'05': '5',
                     '20': '20'
                     }
 
+operating_temperature_range = {'VP': lambda voltage: TemperatureRange('-55', '105'),
+                               'VB': lambda voltage: TemperatureRange('-55', '105'),
+                               'SV': lambda voltage: TemperatureRange('-40', '85'),
+                               'ST': lambda voltage: TemperatureRange('-55', '105'),
+                               'NT': lambda voltage: TemperatureRange('-40', '85'),
+                               'SS': lambda voltage: TemperatureRange('-40', '85'),
+                               'SH': lambda voltage: TemperatureRange('-55', '105'),
+                               'SL': lambda voltage: TemperatureRange('-55', '105'),
+                               'SA': lambda voltage: TemperatureRange('-40', '105'),
+                               'NS': lambda voltage: TemperatureRange('-40', '85'),
+                               'SK': lambda voltage: TemperatureRange('-40', '105'),
+                               'TK': lambda voltage: TemperatureRange('-55',
+                                                                      '105') if voltage < 101 else TemperatureRange(
+                                   '-40', '105') if voltage < 401 else TemperatureRange('-25', '105'),
+                               'NK': lambda voltage: TemperatureRange('-40', '85'),
+                               'LK': lambda voltage: TemperatureRange('-40', '85')}
+
 
 def build_regexpr():
     series_name_group = build_group(series)  # 1
-    unknown_1_group = '(P|R)' # 2
+    unknown_1_group = '(P|R)'  # 2
     capacitance_group = '(R\d{2}|\dR\d|\d{3})'  # 3
     tolerance_group = build_group(tolerance)  # 4
     voltage_group = build_group(voltage)  # 5
-    case_size_diameter_group = build_group(case_size_diameter) # 6
-    case_size_length_group = build_group(case_size_length) # 7
-    unknown2 = '(M)' # 8
+    case_size_diameter_group = build_group(case_size_diameter)  # 6
+    case_size_length_group = build_group(case_size_length)  # 7
+    unknown2 = '(M)'  # 8
     unknown3 = '(E2)'
     return series_name_group + unknown_1_group + capacitance_group + tolerance_group + voltage_group + \
            case_size_diameter_group + case_size_length_group + unknown2 + unknown3 + '?'
 
 
 def decode_match(match):
-    partname = match.group(1)+match.group(2)+match.group(3)+match.group(4)+match.group(5)+match.group(6) +\
+    partname = match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(5) + match.group(6) + \
                match.group(7) + match.group(8)
     partname += match.group(9) if match.group(9) is not None else ""
+    voltage_str = voltage[match.group(5)]
     return Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
                      manufacturer="Jamicon",
                      partnumber=partname,
+                     working_temperature_range=operating_temperature_range[match.group(1)](Decimal(voltage_str[:-1])),
                      series=match.group(1),
                      capacitance=capacitance_string_to_farads(match.group(3)) * Decimal('1000000'),
-                     voltage=voltage[match.group(5)],
+                     voltage=voltage_str,
                      tolerance=tolerance[match.group(4)],
                      dielectric_type="Aluminium oxide",
                      case=case_size_diameter[match.group(6)] + "x" + case_size_length[match.group(7)],

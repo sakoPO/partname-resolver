@@ -1,6 +1,7 @@
 import unittest
 from partname_resolver.capacitors import capacitors_partname_decoder
 from partname_resolver.capacitors.capacitor import Capacitor
+from partname_resolver.units.temperature import TemperatureRange
 
 
 class TestCapacitorPartnameResolver(unittest.TestCase):
@@ -9,6 +10,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Murata",
                               partnumber="GRT0335C1E120JA02",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="GRT",
                               capacitance="12pF",
                               voltage="25VDC",
@@ -23,6 +25,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Murata",
                               partnumber="GCM155R71C104KA55D",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="GCM",
                               capacitance="100nF",
                               voltage="16VDC",
@@ -36,6 +39,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Murata",
                               partnumber="GCM21BR71E105KA56L",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="GCM",
                               capacitance="1uF",
                               voltage="25VDC",
@@ -50,6 +54,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Murata",
                               partnumber="GC331AD72W153KX01",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="GC3",
                               capacitance="15nF",
                               voltage="450VDC",
@@ -64,6 +69,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Murata",
                               partnumber="GCJ188R92A152KA01",
+                              working_temperature_range=TemperatureRange('-55', '150'),
                               series="GCJ",
                               capacitance="1.5nF",
                               voltage="100VDC",
@@ -78,6 +84,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Murata",
                               partnumber="GCD188R71H153KA01",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="GCD",
                               capacitance="15nF",
                               voltage="50VDC",
@@ -92,6 +99,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Murata",
                               partnumber="GCE188R71H682KA01",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="GCE",
                               capacitance="6.8nF",
                               voltage="50VDC",
@@ -109,6 +117,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Murata",
                               partnumber="KCM55LR71H106KH01",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="KCM",
                               capacitance="10uF",
                               voltage="50VDC",
@@ -123,6 +132,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Murata",
                               partnumber="KC355LD72J154KH01",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="KC3",
                               capacitance="150nF",
                               voltage="630VDC",
@@ -137,6 +147,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Murata",
                               partnumber="KCA55L7UMF102KH01",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="KCA",
                               capacitance="1nF",
                               voltage="250VAC",
@@ -151,6 +162,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Murata",
                               partnumber="GCG1555G1H121JA01",
+                              working_temperature_range=TemperatureRange('-55', '150'),
                               series="GCG",
                               capacitance="120pF",
                               voltage="50VDC",
@@ -165,6 +177,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
                               manufacturer="Samsung",
                               partnumber="CL05B222KB5NNNC",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="CL",
                               capacitance="2.2nF",
                               voltage="50V",
@@ -179,6 +192,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Vishay",
                               partnumber="VJ0603D820JXCAJ",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="VJ",
                               capacitance="82pF",
                               voltage="200V",
@@ -193,6 +207,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
                               manufacturer="Nichicon",
                               partnumber="UKA1H220MDD",
+                              working_temperature_range=TemperatureRange('-55', '105'),
                               series="KA",
                               capacitance="22uF",
                               voltage="50VDC",
@@ -207,6 +222,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
                               manufacturer="AVX",
                               partnumber="04023C104KAT2A",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="",
                               capacitance="100nF",
                               voltage="25V",
@@ -221,6 +237,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
                               manufacturer="Samwha",
                               partnumber="CA1E337M10010VR",
+                              working_temperature_range=TemperatureRange('-55', '105'),
                               series="CA",
                               capacitance="330uF",
                               voltage="25VDC",
@@ -234,6 +251,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
                               manufacturer="Samwha",
                               partnumber="SD1J475M05011BB",
+                              working_temperature_range=TemperatureRange('-40', '85'),
                               series="SD",
                               capacitance="4.7uF",
                               voltage="63VDC",
@@ -248,6 +266,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Taiyo Yuden",
                               partnumber="EMK212B7475KG-T",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="M",
                               capacitance="4.7uF",
                               voltage="16V",
@@ -261,6 +280,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Taiyo Yuden",
                               partnumber="HMK325B7225KM-T",
+                              working_temperature_range=TemperatureRange('-55', '125'),
                               series="M",
                               capacitance="2.2uF",
                               voltage="100V",
@@ -276,6 +296,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Aishi",
                               partnumber="EWH1EM221F11OT",
+                              working_temperature_range=TemperatureRange('-40', '105'),
                               series="WH",
                               capacitance="220uF",
                               voltage="25V",
@@ -290,6 +311,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
         component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                               manufacturer="Aishi",
                               partnumber="EWH1KM2R2D11OT",
+                              working_temperature_range=TemperatureRange('-40', '105'),
                               series="WH",
                               capacitance="2.2uF",
                               voltage="100V",
@@ -307,6 +329,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
             component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                                   manufacturer="Jamicon",
                                   partnumber="TKP102M1EG20M",
+                                  working_temperature_range=TemperatureRange('-55', '105'),
                                   series="TK",
                                   capacitance="1000uF",
                                   voltage="25V",
@@ -321,6 +344,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
             component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                                   manufacturer="Jamicon",
                                   partnumber="TKR221M1EFBBM",
+                                  working_temperature_range=TemperatureRange('-55', '105'),
                                   series="TK",
                                   capacitance="220uF",
                                   voltage="25V",
@@ -335,6 +359,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
             component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                                   manufacturer="Jamicon",
                                   partnumber="TKR100M2AE11M",
+                                  working_temperature_range=TemperatureRange('-55', '105'),
                                   series="TK",
                                   capacitance="10uF",
                                   voltage="100V",
@@ -349,6 +374,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
             component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                                   manufacturer="Jamicon",
                                   partnumber="TKR330M1VD11M",
+                                  working_temperature_range=TemperatureRange('-55', '105'),
                                   series="TK",
                                   capacitance="33uF",
                                   voltage="35V",
@@ -364,6 +390,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
             component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                                   manufacturer="Jamicon",
                                   partnumber="SKP471M1AE11M",
+                                  working_temperature_range=TemperatureRange('-40', '105'),
                                   series="SK",
                                   capacitance="470uF",
                                   voltage="10V",
@@ -379,6 +406,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
             component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                                   manufacturer="Jamicon",
                                   partnumber="NSP470M0JE07ME2",
+                                  working_temperature_range=TemperatureRange('-40', '85'),
                                   series="NS",
                                   capacitance="47uF",
                                   voltage="6.3V",
@@ -394,6 +422,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
             component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                                   manufacturer="Jamicon",
                                   partnumber="SSP2R2M1JC07ME2",
+                                  working_temperature_range=TemperatureRange('-40', '85'),
                                   series="SS",
                                   capacitance="2.2uF",
                                   voltage="63V",
@@ -409,6 +438,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
                 component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                                       manufacturer="Jamicon",
                                       partnumber="SHR100M1HE07M",
+                                      working_temperature_range=TemperatureRange('-55', '105'),
                                       series="SH",
                                       capacitance="10uF",
                                       voltage="50V",
@@ -418,6 +448,23 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
                                       note="7mmL, Wide temperature range")
                 self.assertEqual(component, part)
 
+    def test_kemet(self):
+        with self.subTest("C0603C393K5RAC"):
+            part = capacitors_partname_decoder.resolve("C0603C393K5RAC")
+            self.assertIsNotNone(part)
+            component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
+                                  manufacturer="Kemet",
+                                  partnumber="C0603C393K5RAC",
+                                  working_temperature_range=TemperatureRange('-55', '125'),
+                                  series="C",
+                                  capacitance="39nF",
+                                  voltage="50V",
+                                  tolerance={'min': "-10%", 'max': '+10%'},
+                                  dielectric_type="X7R",
+                                  case="0603",
+                                  note="Standard")
+            self.assertEqual(component, part)
+
     def test_yaego(self):
         # ---------------- CC -----------------
         with self.subTest("CC0402JRNPO9BN330"):
@@ -426,6 +473,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
             component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                                   manufacturer="Yaego",
                                   partnumber="CC0402JRNPO9BN330",
+                                  working_temperature_range=TemperatureRange('-55', '125'),
                                   series="CC",
                                   capacitance="33pF",
                                   voltage="50V",
@@ -440,6 +488,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
             component = Capacitor(capacitor_type=Capacitor.Type.MLCC,
                                   manufacturer="Yaego",
                                   partnumber="CC1206MKX7RDBB102",
+                                  working_temperature_range=TemperatureRange('-55', '125'),
                                   series="CC",
                                   capacitance="1nF",
                                   voltage="2000V",
@@ -448,6 +497,7 @@ class TestCapacitorPartnameResolver(unittest.TestCase):
                                   case="1206",
                                   note="Blister taping reel; Reel 7 inch")
             self.assertEqual(component, part)
+
 
 if __name__ == "__main__":
     unittest.main()

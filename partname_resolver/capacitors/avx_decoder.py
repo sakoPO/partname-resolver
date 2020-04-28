@@ -1,5 +1,6 @@
 from .capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
+from ..units.temperature import TemperatureRange
 from .common import *
 import re
 
@@ -47,6 +48,8 @@ packing = {'2': '7" Reel',
 
 special_code = {'A': 'Standard product'}
 
+operating_temperature_range = {'C': TemperatureRange('-55', '125')}
+
 
 def build_regexpr():
     dimensions_group = build_group(size)  # 1
@@ -67,6 +70,7 @@ def decode_match(match):
                      manufacturer="AVX",
                      partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
                          5) + match.group(6) + match.group(7) + match.group(8) + match.group(9),
+                     working_temperature_range=operating_temperature_range[match.group(3)],
                      series="",
                      capacitance=capacitance_string_to_farads(match.group(4)),
                      voltage=voltage[match.group(2)],

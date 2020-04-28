@@ -2,8 +2,8 @@
 
 from .capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
+from ..units.temperature import TemperatureRange
 from .common import *
-# from ..case.chip import Chip
 import re
 
 voltage = {'P': '2.5V',
@@ -86,21 +86,30 @@ packing_type = {'F': 'φ178mm Taping (2mm pitch)',
                 'R': 'φ178mm Taping (2mm pitch) 105type only （Thickness code E,H）',
                 'W': 'φ178mm Taping (1mm pitch)021/042type only'}
 
+operating_temperature_range = {'CG': TemperatureRange('-55', '125'),
+                               'UJ': TemperatureRange('-55', '125'),
+                               'UK': TemperatureRange('-55', '125'),
+                               'BJ': TemperatureRange('-55', '85'),
+                               'B7': TemperatureRange('-55', '125'),
+                               'C6': TemperatureRange('-55', '105'),
+                               'C7': TemperatureRange('-55', '125'),
+                               'LD': TemperatureRange('-55', '85')}
+
 
 def build_regexpr():
     voltage_group = build_group(voltage)  # 1
     series_name_group = build_group(series_name)  # 2
     plating_group = build_group(plating)  # 3
     dimensions_group = build_group(size)  # 4
-   # dimensions_tolerance_group = build_group(size_tolerance)  # 5
+    # dimensions_tolerance_group = build_group(size_tolerance)  # 5
     temperature_group = build_group(dielectric_type)  # 5
     capacitance_group = '(R\d{2}|\dR\d|\d{3})'  # 6
     tolerance_group = build_group(tolerance)  # 7
     thickness_group = build_group(thickness)  # 8
-    special_code_group = '(\-)' # 9
+    special_code_group = '(\-)'  # 9
     packing_type_group = build_group(packing_type)  # 10
 
-    return voltage_group + series_name_group + plating_group + dimensions_group + temperature_group + capacitance_group\
+    return voltage_group + series_name_group + plating_group + dimensions_group + temperature_group + capacitance_group \
            + tolerance_group + thickness_group + special_code_group + packing_type_group + '?'
 
 
@@ -109,6 +118,7 @@ def decode_match(match):
                      manufacturer="Taiyo Yuden",
                      partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
                          5) + match.group(6) + match.group(7) + match.group(8) + match.group(9) + match.group(10),
+                     working_temperature_range=operating_temperature_range[match.group(5)],
                      series=match.group(2),
                      capacitance=capacitance_string_to_farads(match.group(6)),
                      voltage=voltage[match.group(1)],

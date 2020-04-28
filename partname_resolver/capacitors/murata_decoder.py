@@ -1,6 +1,7 @@
 # based on https://search.murata.co.jp/Ceramy/image/img/A01X/partnumbering_e_02.pdf
 from .capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
+from ..units.temperature import TemperatureRange
 from .common import *
 import re
 
@@ -54,6 +55,26 @@ dielectric_type = {'0C': 'CHA',
                    'R7': 'X7R',
                    'R9': 'X8R'}
 
+operating_temperature_range = {'0C': TemperatureRange('-55', '150'),
+                               '1C': None,
+                               '2C': TemperatureRange('-55', '125'),
+                               '3C': TemperatureRange('-55', '125'),
+                               '4C': TemperatureRange('-55', '125'),
+                               '5C': TemperatureRange('-55', '125'),
+                               '5G': TemperatureRange('-55', '150'),
+                               '7U': TemperatureRange('-55', '125'),
+                               '9E': TemperatureRange('-55', '125'),
+                               'C7': TemperatureRange('-55', '125'),
+                               'C8': TemperatureRange('-55', '105'),
+                               'D7': TemperatureRange('-55', '125'),
+                               'L8': TemperatureRange('-55', '150'),
+                               'M8': TemperatureRange('-55', '150'),
+                               'M9': None,
+                               'R1': TemperatureRange('-55', '125'),
+                               'R6': TemperatureRange('-55', '85'),
+                               'R7': TemperatureRange('-55', '125'),
+                               'R9': TemperatureRange('-55', '150')}
+
 voltage = {'0E': '2.5VDC',
            '0G': '4VDC',
            '0J': '6.3VDC',
@@ -92,7 +113,7 @@ package = {'L': 'ø180mm Embossed Taping',
 
 def build_regexpr(product_id, series, height_dimmension):
     product_series_group = '(' + product_id + ')'  # 1
-    series_group = build_group(series) # 2
+    series_group = build_group(series)  # 2
     dimmensions_group = build_group(dimension)  # 3
     height_group = build_group(height_dimmension)  # 4
     temperature_group = build_group(dielectric_type)  # 5
@@ -102,16 +123,17 @@ def build_regexpr(product_id, series, height_dimmension):
     individual_specificatin_code_group = '(.{3})'  # 9
     package_group = build_group(package)
 
-    return product_series_group +series_group + dimmensions_group + height_group + temperature_group + voltage_group + capacitance_group + tolerance_group + individual_specificatin_code_group + package_group + '?'
+    return product_series_group + series_group + dimmensions_group + height_group + temperature_group + voltage_group + capacitance_group + tolerance_group + individual_specificatin_code_group + package_group + '?'
 
 
 def decode_match(match, series_code, height):
     partnumber = match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
-                         5) + match.group(6) + match.group(7) + match.group(8) + match.group(9)
+        5) + match.group(6) + match.group(7) + match.group(8) + match.group(9)
     partnumber += match.group(10) if match.group(10) is not None else ""
     return Capacitor(capacitor_type=Capacitor.Type.MLCC,
                      manufacturer="Murata",
                      partnumber=partnumber,
+                     working_temperature_range=operating_temperature_range[match.group(5)],
                      series=match.group(1) + match.group(2),
                      capacitance=capacitance_string_to_farads(match.group(7)),
                      voltage=voltage[match.group(6)],

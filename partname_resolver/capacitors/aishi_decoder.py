@@ -1,5 +1,6 @@
 from .capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
+from ..units.temperature import TemperatureRange
 from .common import *
 import re
 
@@ -45,6 +46,8 @@ terminal_code = {'O': ''}
 sleeve_code = {'C': 'PVC Sleeve',
                'T': 'PET Sleeve'}
 
+operating_temperature_range = {'WH': lambda voltage : TemperatureRange('-40', '105') if voltage < 420 else TemperatureRange('-25', '105')}
+
 
 def build_regexpr():
     category_code_group = build_group(category_code)  # 1
@@ -62,12 +65,14 @@ def build_regexpr():
 def decode_match(match):
     partnumber = match.group(1)+match.group(2)+match.group(3)+match.group(4)+match.group(5)+match.group(6)+\
                  match.group(7) + match.group(8)
+    voltage_str = voltage[match.group(3)]
     return Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
                      manufacturer="Aishi",
                      partnumber=partnumber,
+                     working_temperature_range=operating_temperature_range[match.group(2)](Decimal(voltage_str[:-1])),
                      series=match.group(2),
                      capacitance=capacitance_string_to_farads(match.group(5)) * Decimal('1000000'),
-                     voltage=voltage[match.group(3)],
+                     voltage=voltage_str,
                      tolerance=tolerance[match.group(4)],
                      dielectric_type="Aluminium oxide",
                      case=size_code[match.group(6)],
