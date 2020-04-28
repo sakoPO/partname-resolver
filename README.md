@@ -19,12 +19,21 @@ This script can extract parameters like:
 ### Supported capacitors series
 - Aishi: WH
 - AVX: standard product for chip capacitor
+- Fenghua Advanced Technology
 - Jamicon: VP, VB, SV, ST, NT, SS, SH, SL, SA, NS, SK, TK, NK, LK
 - Kemet:
 - Murata: GRT, GCM, GC3, GCJ, GCD, GCE, KCM, KC3, KCA, GCG
 - Nichicon: VZ, VR, KA, CS, CY
 - Samsung: CL
 - Samwha: CA, RC, RD, SD
+- Taiyo Yuden
 - Vishay: VJ
-- Yaego: CC
+- Yageo: CC
 
+### Supported resistor series
+- Bourns: CAT16, CAY16, CHV, CR
+- Royal Ohm
+- TE Connectivity: CRGCQ
+- Thunder: RL
+- Vishay: CRCW, PAT, PNM, TNPW
+- Yageo: AC, RC
