@@ -50,6 +50,36 @@ class ResistorsPartnameResolverTestCase(unittest.TestCase):
         self.assertEqual('0402', decoded.case)
         self.assertEqual('General purpose chip resistors', decoded.note)
 
+    def test_te_connectivity(self):
+        decoded = resistors_partname_decoder.resolve("CRGCQ1206F120R")
+        self.assertIsNotNone(decoded)
+        self.assertEqual(Resistor.Type.ThickFilmResistor, decoded.type)
+        self.assertEqual('TE Connectivity', decoded.manufacturer)
+        self.assertEqual('CRGCQ1206F120R', decoded.partnumber)
+        self.assertEqual(TemperatureRange(Decimal('-55'), Decimal('155')), decoded.working_temperature_range)
+        self.assertEqual('CRGCQ', decoded.series)
+        self.assertEqual(Resistance('120'), decoded.resistance)
+        self.assertEqual(Tolerance('1%'), decoded.tolerance)
+        self.assertEqual(Power('0.250'), decoded.power)
+        self.assertEqual('200V', decoded.max_working_voltage)
+        self.assertEqual('1206', decoded.case)
+        self.assertEqual('AEC-Q200 compliant Thick Film Chip Resistor, TCR=100ppm/K', decoded.note)
+
+    def test_thunder(self):
+        decoded = resistors_partname_decoder.resolve("RL2512JK-7W 0R33")
+        self.assertIsNotNone(decoded)
+        self.assertEqual(Resistor.Type.ThickFilmResistor, decoded.type)
+        self.assertEqual('Thunder', decoded.manufacturer)
+        self.assertEqual('RL2512JK-7W 0R33', decoded.partnumber)
+        self.assertEqual(TemperatureRange(Decimal('-55'), Decimal('155')), decoded.working_temperature_range)
+        self.assertEqual('RL', decoded.series)
+        self.assertEqual(Resistance('0.33'), decoded.resistance)
+        self.assertEqual(Tolerance('5%'), decoded.tolerance)
+        self.assertEqual(Power('2'), decoded.power)
+        self.assertEqual('200V', decoded.max_working_voltage)
+        self.assertEqual('2512', decoded.case)
+        self.assertEqual('Thick Film Chip Resistor, TCR=1500ppm/K', decoded.note)
+
     def test_vishay(self):
         decoded = resistors_partname_decoder.resolve("CRCW0805562RFKTA")
         self.assertEqual(Resistor.Type.ThickFilmResistor, decoded.type)
@@ -90,7 +120,7 @@ class ResistorsPartnameResolverTestCase(unittest.TestCase):
             self.assertEqual(Power('0.1'), decoded.power)
             self.assertEqual('200V', decoded.max_working_voltage)
             self.assertEqual('0603', decoded.case)
-            self.assertEqual('Thick Film High Voltage Chip Resistors', decoded.note)
+            self.assertEqual('Thick Film High Voltage Chip Resistors, TCR=100ppm/K, Tin-plated (RoHS compliant), Packing: Unknown', decoded.note)
         with self.subTest("CHV0603-JW-105ELF "):
             decoded = resistors_partname_decoder.resolve("CHV0603-JW-105ELF ")
             self.assertEqual(Resistor.Type.ThickFilmResistor, decoded.type)
@@ -103,7 +133,7 @@ class ResistorsPartnameResolverTestCase(unittest.TestCase):
             self.assertEqual(Power('0.1'), decoded.power)
             self.assertEqual('200V', decoded.max_working_voltage)
             self.assertEqual('0603', decoded.case)
-            self.assertEqual('Thick Film High Voltage Chip Resistors', decoded.note)
+            self.assertEqual('Thick Film High Voltage Chip Resistors, TCR=200ppm/K, Tin-plated (RoHS compliant), Packing: Unknown', decoded.note)
 
 
 if __name__ == '__main__':
