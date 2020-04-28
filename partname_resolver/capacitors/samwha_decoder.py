@@ -9,26 +9,26 @@ series = {'CA': 'Chip type, Long Life Series',
           'RD': 'Wide Temperature Range Series',
           'SD': 'Standard, For General Purposes Series'}
 
-voltage = {'0E': '2.5VDC',
-           '0G': '4VDC',
-           '0J': '6.3VDC',
-           '1A': '10VDC',
-           '1C': '16VDC',
-           '1E': '25VDC',
-           '1V': '35VDC',
-           '1H': '50VDC',
-           '1J': '63VDC',
-           '1K': '80VDC',
-           '2A': '100VDC',
-           '2C': '160VDC',
-           '2D': '200VDC',
-           '2E': '250VDC',
-           '2F': '315VDC',
-           '2V': '350VDC',
-           '2G': '400VDC',
-           '2W': '450VDC',
-           '2J': '630VDC',
-           '3A': '1000VDC',
+voltage = {'0E': '2.5V',
+           '0G': '4V',
+           '0J': '6.3V',
+           '1A': '10V',
+           '1C': '16V',
+           '1E': '25V',
+           '1V': '35V',
+           '1H': '50V',
+           '1J': '63V',
+           '1K': '80V',
+           '2A': '100V',
+           '2C': '160V',
+           '2D': '200V',
+           '2E': '250V',
+           '2F': '315V',
+           '2V': '350V',
+           '2G': '400V',
+           '2W': '450V',
+           '2J': '630V',
+           '3A': '1000V',
            'MF': '250VAC'}
 
 tolerance = {'K': Tolerance('10%'),
@@ -53,7 +53,7 @@ case_diameter = {'03': '3mm',
 operating_temperature_range = {'CA': lambda voltage : TemperatureRange('-55', '105'),
                                'RC': lambda voltage : TemperatureRange('-55', '105'),
                                'RD': lambda voltage : TemperatureRange('-55', '105') if voltage < 101 else TemperatureRange('-40', '105') if voltage < 351 else TemperatureRange('-25', '105'),
-                               'SD': lambda voltage : TemperatureRange('-40', '85') if voltage < 101 else TemperatureRange('-25', '85')}
+                               'SD': lambda voltage : TemperatureRange('-40', '85') if voltage < 351 else TemperatureRange('-25', '85')}
 
 
 def build_regexpr():
@@ -64,18 +64,20 @@ def build_regexpr():
     case_diameter_group = build_group(case_diameter)  # 5
     case_height_group = '(\d{3}|\d{2}M)'  # 6
     lead_taping_group = '(VR|BB)'  # 7
-    # internal_control_code =
+    internal_control_code = '(\d{3})'
     return series_name_group + voltage_group + capacitance_group + tolerance_group + case_diameter_group + \
-           case_height_group + lead_taping_group + '?'
+           case_height_group + lead_taping_group + internal_control_code + '?'
 
 
 def decode_match(match):
     voltage_str = voltage[match.group(2)]
+    partname = match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
+        5) + match.group(6) + match.group(7)
+    partname += match.group(8) if match.group(8) is not None else ""
     return Capacitor(capacitor_type=Capacitor.Type.ElectrolyticAluminium,
                      manufacturer="Samwha",
-                     partnumber=match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
-                         5) + match.group(6) + match.group(7),
-                     working_temperature_range=operating_temperature_range[match.group(1)](Decimal(voltage_str[:-3])),
+                     partnumber=partname,
+                     working_temperature_range=operating_temperature_range[match.group(1)](Decimal(voltage_str[:-1])),
                      series=match.group(1),
                      capacitance=capacitance_string_to_farads(match.group(3)),
                      voltage=voltage_str,
