@@ -24,8 +24,8 @@ def find_resistor():
         print("Component is resistor:", isinstance(resolved, Resistor))
         print("Component found:", resolved)
         print("Component type:", resolved.type.value)
-        print("Component resistance", resolved.resistance, "Ohm")
-        print("Component max power", resolved.power, "W")
+        print("Component resistance", resolved.resistance)
+        print("Component max power", resolved.power)
         print("Component max operating voltage", resolved.max_working_voltage)
 
 
