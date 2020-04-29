@@ -29,6 +29,17 @@ class CapacitanceTestCase(unittest.TestCase):
         self.assertEqual(Capacitance("1m5").get_value(), Decimal('1.5') * Decimal('1E-3'))
         self.assertEqual(Capacitance("1F5").get_value(), Decimal('1.5') * Decimal('1E-0'))
 
+        self.assertEqual(Capacitance("1.5p").get_value(), Decimal('1.5') * Decimal('1E-12'))
+        self.assertEqual(Capacitance("1.5n").get_value(), Decimal('1.5') * Decimal('1E-9'))
+        self.assertEqual(Capacitance("1.5u").get_value(), Decimal('1.5') * Decimal('1E-6'))
+        self.assertEqual(Capacitance("1.5m").get_value(), Decimal('1.5') * Decimal('1E-3'))
+        self.assertEqual(Capacitance("1.5F").get_value(), Decimal('1.5') * Decimal('1E-0'))
+
+        self.assertEqual(Capacitance("1.5pF").get_value(), Decimal('1.5') * Decimal('1E-12'))
+        self.assertEqual(Capacitance("1.5nF").get_value(), Decimal('1.5') * Decimal('1E-9'))
+        self.assertEqual(Capacitance("1.5uF").get_value(), Decimal('1.5') * Decimal('1E-6'))
+        self.assertEqual(Capacitance("1.5mF").get_value(), Decimal('1.5') * Decimal('1E-3'))
+
     def test_capacitance_to_str_conversion(self):
         self.assertEqual(str(Capacitance(Decimal('100'))), "100F")
         self.assertEqual(str(Capacitance(Decimal('100E-3'))), "100mF")
@@ -45,6 +56,9 @@ class CapacitanceTestCase(unittest.TestCase):
     def test_capacitance_range(self):
         self.assertEqual("1pF...1nF", str(CapacitanceRange(Capacitance("1pF"), Capacitance("1nF"))))
         self.assertEqual("1pF...1nF", str(CapacitanceRange("1pF", "1nF")))
+
+    def test_capacitance_range_equality(self):
+        self.assertEqual(CapacitanceRange("1pF", "1nF"), CapacitanceRange("1pF", "1nF"))
 
 
 if __name__ == '__main__':
