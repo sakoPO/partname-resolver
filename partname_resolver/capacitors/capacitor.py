@@ -19,7 +19,7 @@ class Capacitor:
         self.partnumber = partnumber  # should be moved to parts common base class
         self.working_temperature_range = working_temperature_range  # should be moved to parts common base class
         self.series = series
-        if isinstance(capacitance, CapacitanceRange):
+        if isinstance(capacitance, CapacitanceRange) or isinstance(capacitance, Capacitance):
             self.capacitance = capacitance
         else:
             self.capacitance = Capacitance(capacitance)
@@ -116,7 +116,7 @@ class Capacitor:
         if self.manufacturer is not None and other.manufacturer is not None:
             if self.manufacturer.casefold() != other.manufacturer.casefold():
                 if debug:
-                    print("manufacturer mismatch")
+                    print("Manufacturer mismatch:", self.manufacturer, "!=", other.manufacturer)
                 return False
         if self.partnumber is not None and other.partnumber is not None:
             if self.partnumber != other.partnumber:
