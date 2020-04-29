@@ -1,12 +1,17 @@
 from decimal import Decimal
+from .range_base import RangeBase
 
 
 class Temperature:
     def __init__(self, temperature):
+        self.name = "Celsius"
         if isinstance(temperature, str):
             self.temperature = Decimal(temperature)
         else:
             self.temperature = Decimal(temperature)
+
+    def get_value(self):
+        return self.temperature
 
     def __eq__(self, other):
         return self.temperature == other.temperature
@@ -15,7 +20,7 @@ class Temperature:
         return str(self.temperature) + u"\u2103"
 
 
-class TemperatureRange:
+class TemperatureRange(RangeBase):
     def __init__(self, min, max):
         if isinstance(min, Temperature):
             self.min = min

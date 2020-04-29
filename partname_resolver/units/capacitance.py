@@ -1,8 +1,9 @@
+from .unit_base import Unit
 from decimal import Decimal
 import re
 
 
-class Capacitance:
+class Capacitance(Unit):
     multiply = {'G': Decimal('1000000000'),
                 'GF': Decimal('1000000000'),
                 'M': Decimal('1000000'),
@@ -24,13 +25,14 @@ class Capacitance:
                 'fF': Decimal('0.000000000000001')}
 
     def __init__(self, capacitance):
+        super().__init__("Farad")
         if isinstance(capacitance, Decimal):
             self.capacitance = capacitance
         elif isinstance(capacitance, str):
             self.capacitance = self.__convert_str_capacitance_to_decimal_farads(capacitance)
         else:
             print(capacitance)
-            raise TypeError
+            raise TypeError(capacitance)
 
     def get_value(self):
         return self.capacitance

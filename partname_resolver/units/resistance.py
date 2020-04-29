@@ -22,6 +22,7 @@ class Resistance:
                 u'uR': Decimal('0.000001')}
 
     def __init__(self, resistance):
+        self.name = "Ohm"
         if isinstance(resistance, Decimal):
             self.resistance = resistance
         elif isinstance(resistance, str):

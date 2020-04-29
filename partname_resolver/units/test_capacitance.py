@@ -4,6 +4,10 @@ from decimal import Decimal
 
 
 class CapacitanceTestCase(unittest.TestCase):
+    def test_unit_name(self):
+        cap = Capacitance("1pF")
+        self.assertEqual("Farad", cap.name)
+
     def test_capacitance_conversion_str_to_decimal(self):
         self.assertEqual(Capacitance("1pF").get_value(), Decimal('1') * Decimal('1E-12'))
         self.assertEqual(Capacitance("1nF").get_value(), Decimal('1') * Decimal('1E-9'))

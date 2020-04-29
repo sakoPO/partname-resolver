@@ -1,8 +1,9 @@
 from decimal import Decimal
+from .unit_base import Unit
 import re
 
 
-class Power:
+class Power(Unit):
     multiply = {u'G': Decimal('1000000000'),
                 u'GW': Decimal('1000000000'),
                 u'M': Decimal('1000000'),
@@ -16,6 +17,7 @@ class Power:
                 u'uW': Decimal('0.000001')}
 
     def __init__(self, power):
+        super().__init__("Watt")
         if isinstance(power, Decimal):
             self.power = power
         elif isinstance(power, str):
