@@ -2,6 +2,7 @@
 from .capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
 from ..units.temperature import TemperatureRange
+from ..units.capacitance import CapacitanceRange, Capacitance
 from .common import *
 import re
 
@@ -110,6 +111,106 @@ package = {'L': 'ø180mm Embossed Taping',
            'J': 'ø330mm Paper Taping',
            '#': 'Unknown package'}
 
+# ----------- Mutata Trimmer Capacitor
+series_TZ = {'B4': '4mm Size SMD Type',
+             'W4': '4mm Size SMD Type',
+             'C3': '3mm Size SMD Type',
+             'Y2': '2mm Size SMD Type',
+             'R1': '1mm Size SMD Type'}
+temperature_characteristics_TZ = {'Z': 'NP0ppm/°C',
+                                  'R': 'N750ppm/°C',
+                                  'K': 'N1000ppm/°C',
+                                  'P': 'N1200ppm/°C'}
+terminal_shape_TZ = {'A': '',
+                     'B': ''}
+individual_specs_TZ = {'001': 'TZR1, TZW4 Standard Type',
+                       'C01': 'TZY2 Standard Type',
+                       'A01': 'TZC3 Standard Type',
+                       'A10': 'TZB4 No-cover Film Standard Type',
+                       'B10': 'TZB4 with Cover Film Standard Type'}
+packing_TZ = {'B00': 'Bulk',
+              'R00': 'Reel (Taping ø180mm)',
+              'R01': 'Reel (Taping ø330mm)'}
+
+voltage_TZ = {'B4': lambda capacitance: '100V' if capacitance != '50pF' and capacitance != '25pF' else '50V',
+              'W4': lambda capacitance: '250V',
+              'C3': lambda capacitance: '100V',
+              'Y2': lambda capacitance: '25V',
+              'R1': lambda capacitance: '25V'}
+
+operating_temperature_range_TZ = {'B4': TemperatureRange('-25', '85'),
+                                  'W4': TemperatureRange('-55', '125'),
+                                  'C3': TemperatureRange('-25', '85'),
+                                  'Y2': TemperatureRange('-25', '85'),
+                                  'R1': TemperatureRange('-25', '85')}
+
+tolerance_TZ = {'B4': lambda capacitance: Tolerance('-0%',
+                                                    '+50%') if capacitance != '50pF' and capacitance != '25pF' else Tolerance(
+    '-0%', '+100%'),
+                'W4': lambda capacitance: Tolerance('-0%', '+50%') if capacitance < '1.5pF' else Tolerance('-0%',
+                                                                                                           '+100%'),
+                'C3': lambda capacitance: Tolerance('-0%', '+50%'),
+                'Y2': lambda capacitance: Tolerance('-0%', '+100%'),
+                'R1': lambda capacitance: Tolerance('-0%', '+100%')}
+
+
+def get_capacitance_range(series, max_capacitance):
+    capacitance_min = {'1pF': Capacitance('0.6pF'),
+                       '1.5pF': Capacitance('0.7pF'),
+                       '2.5pF': Capacitance('1pF'),
+                       '3pF': Capacitance('1.4pF'),
+                       '4pF': Capacitance('1.5pF'),
+                       '6pF': Capacitance('2pF'),
+                       '8pF': Capacitance('3pF'),
+                       '10pF': Capacitance('3pF'),
+                       '20pF': Capacitance('4.5pF'),
+                       '25pF': Capacitance('4pF'),
+                       '30pF': Capacitance('6.5pF'),
+                       '40pF': Capacitance('8.5pF'),
+                       '45pF': Capacitance('8pF'),
+                       '50pF': Capacitance('7pF')}
+    capacitance = Capacitance(max_capacitance)
+    if series == 'W4':
+        return CapacitanceRange(Capacitance('0.4pF'), capacitance)
+    elif series == 'Y2':
+        y2_specific = {'3pF': Capacitance('1.5pF'), '6pF': Capacitance('2.5pF'), '25pF': Capacitance('5.5pF')}
+        if str(capacitance) in y2_specific:
+            return CapacitanceRange(y2_specific[str(capacitance)], capacitance)
+    elif series == '3P' and capacitance == '20pF':
+        return CapacitanceRange(Capacitance('5pF'), capacitance)
+    else:
+        return CapacitanceRange(capacitance_min[str(capacitance)], capacitance)
+
+
+def build_regexpr_TZ():
+    product_id_group = '(TZ)'  # 1
+    series_group = build_group(series_TZ)  # 2
+    temperature_characteristics_group = build_group(temperature_characteristics_TZ)  # 3
+    capacitance_group = '(R\d{2}|\dR\d|\d{3})'  # 4
+    terminal_shape_group = build_group(terminal_shape_TZ)  # 5
+    individual_specs_group = build_group(individual_specs_TZ)  # 6
+    packing_group = build_group(packing_TZ)  # 7
+    return product_id_group + series_group + temperature_characteristics_group + capacitance_group + \
+           terminal_shape_group + individual_specs_group + packing_group
+
+
+def decode_match_TZ(match):
+    partnumber = match.group(1) + match.group(2) + match.group(3) + match.group(4) + match.group(
+        5) + match.group(6) + match.group(7)
+    series = match.group(2)
+    capacitance_max = capacitance_string_to_farads(match.group(4))
+    return Capacitor(capacitor_type=Capacitor.Type.CeramicTrimmer,
+                     manufacturer="Murata Manufacturing",
+                     partnumber=partnumber,
+                     working_temperature_range=operating_temperature_range_TZ[series],
+                     series=match.group(1) + series,
+                     capacitance=get_capacitance_range(series, capacitance_max),
+                     voltage=voltage_TZ[series](capacitance_max),
+                     tolerance=tolerance_TZ[series](capacitance_max),
+                     dielectric_type=None,
+                     case=None,
+                     note=series_TZ[match.group(2)])
+
 
 def build_regexpr(product_id, series, height_dimmension):
     product_series_group = '(' + product_id + ')'  # 1
@@ -206,6 +307,13 @@ def resolve_KC(partname):
         return decode_match(match, series_code, height_kc_only)
 
 
+def resolve_TZ(partname):
+    regexpr = build_regexpr_TZ()
+    match = re.match(regexpr, partname)
+    if match:
+        return decode_match_TZ(match)
+
+
 def resolve(partname):
     part = resolve_GC(partname)
     if part:
@@ -220,5 +328,8 @@ def resolve(partname):
     if part:
         return part
     part = resolve_KC(partname)
+    if part:
+        return part
+    part = resolve_TZ(partname)
     if part:
         return part
