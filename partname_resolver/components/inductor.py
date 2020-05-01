@@ -27,10 +27,9 @@ class Inductor:
         self.note = note
 
     def get_description(self):
-        prefix = {Inductor.Type.ThinFilmResistor: "Resistor",
-                  Inductor.Type.ThickFilmResistor: "Resistor",
-                  Inductor.Type.ThinFilmResistorArray: "Resistor array",
-                  Inductor.Type.ThickFilmResistorArray: "Resistor array"}
+        prefix = {Inductor.Type.MultilayerInductor: "Inductor",
+                  Inductor.Type.WireWoundInductor: "Inductor",
+                  Inductor.Type.FilmInductor: "Inductor"}
         if self.type is not None:
             description = prefix[self.type]
         else:
@@ -38,13 +37,15 @@ class Inductor:
         description += ' ' + str(self.inductance)
         if isinstance(self.tolerance, Tolerance):
             description += ' ' + str(self.tolerance)
-        if self.power is not None:
-            description += ' ' + str(self.power)
-        if self.max_working_voltage is not None:
-            description += ' ' + self.max_working_voltage
+        if self.rated_current is not None:
+            description += ' ' + str(self.rated_current)
+        if self.dc_resistance is not None:
+            description += ' ' + self.dc_resistance
+        if self.q is not None:
+            description += ' ' + self.q
         if self.working_temperature_range is not None:
             description += ' ' + str(self.working_temperature_range)
-        description += ' ' + self.case
+        description += ' ' + str(self.case)
         return description
 
     def __repr__(self):
