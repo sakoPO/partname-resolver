@@ -1,9 +1,7 @@
 from partname_resolver.components.inductor import Inductor
-from partname_resolver.units.capacitanceTolerance import Tolerance
 from partname_resolver.units.temperature import TemperatureRange
 from partname_resolver.inductors.common import *
-from partname_resolver.case.chip import Chip
-from partname_resolver.units.length import Dimmension, Length, LengthTolerance
+from .murata_common import *
 import re
 
 product_id = {'LQ': 'Chip inductor'}
@@ -12,25 +10,6 @@ structure = {'M': 'Multilayer Type (Ferrite Core)',
              'H': 'Wire Wound Type (Ferrite Core',
              'G': 'Multilayer Type (Air-core Inductors (Coils)',
              'W': 'Wire Wound Type (Ferrite Core'}
-
-dimensions = {'02': Chip('01005', T=Dimmension('0.2mm', LengthTolerance('0.02mm'))),
-              '03': Chip('0201', T=Dimmension('0.3mm', LengthTolerance('0.03mm'))),
-              '04': '',
-              '15': Chip('0402', T=Dimmension('0.5mm', LengthTolerance('0.05mm'))),
-              '18': Chip('0603', T=Dimmension('0.8mm', LengthTolerance('0.15mm'))),
-              '21': Chip('0805', L=Length('2mm'), W=Length('1.25mm')),
-              '2B': Chip('0805', L=Length('2mm'), W=Length('1.5mm')),
-              '2M': '',
-              '2U': Chip('1008'),
-              '2H': '',
-              '3N': '',
-              '31': Chip('1206'),
-              '32': '',
-              '43': '',
-              '44': '',
-              '5B': '',
-              '55': '',
-              '66': ''}
 
 application_and_haracteristics = {'LQM': {'D': 'for Choke (Low-current DC Power Supplies)',
                                           'F': 'for Choke (DC Power Supplies)',
@@ -45,19 +24,13 @@ category = {'N': 'Standard Type',
             'B': 'Special Feature Classification',
             'W': 'Special Feature Classification'}
 
-tolerance = {'F': Tolerance('1%'),
-             'G': Tolerance('2%'),
-             'J': Tolerance('5%'),
-             'K': Tolerance('10%'),
-             'M': Tolerance('20%'),
-             'N': Tolerance('30%')}
-
 features = {'0': 'Standard Type',
             '2': 'Standard Type',
             '3': 'Low DC Resistance',
             '5': 'Low Profile Type',
             '7': 'Large Current Type',
-            '8': 'Low DC Resistance/Large Current Type'}
+            '8': 'Low DC Resistance/Large Current Type',
+            'P': ''}
 
 thickness = {'B': '',
              'C': '',
@@ -76,7 +49,12 @@ thickness = {'B': '',
 
 electrode = {'0': 'Sn',
              '2': 'Sn',
-             '3': 'LF Solder'}
+             '3': 'LF Solder',
+             'A': 'Au Plating',
+             'L': 'Lead-Free Solder Plating',
+             'S': 'Sn Plating',
+             'F': 'Sn Plating',
+             'T': 'Sn Plating'}
 
 specification = {'0': '',
                  'S': '',
@@ -86,17 +64,8 @@ specification = {'0': '',
                  'E': '',
                  'R': ''}
 
-package = {'B': 'Bulk',
-           'E': 'ø180mm Embossed Taping',
-           'F': 'ø330mm Embossed Taping',
-           'L': 'ø180mm Embossed Taping',
-           'D': 'ø180mm Paper Taping',
-           'W': 'ø180mm Paper Taping',
-           'K': 'ø330mm Embossed Taping',
-           'J': 'ø330mm Paper Taping',
-           '#': 'Unknown package'}
-
-operating_temperature_range = {'G': TemperatureRange('-55', '125')}
+operating_temperature_range = {'G': TemperatureRange('-55', '125'),
+                               'H': TemperatureRange('-40', '105')}
 
 inductor_type = {'G': Inductor.Type.MultilayerInductor,
                  'H': Inductor.Type.WireWoundInductor,
@@ -107,7 +76,7 @@ def build_regexpr():
     product_id_group = build_group(product_id)  # 1
     series_group = build_group(structure)  # 2
     dimension_group = build_group(dimensions)  # 3
-    application_and_haracteristics_group = '(H|M|P|T|A)'  # build_group(application_and_haracteristics)  # 4
+    application_and_haracteristics_group = '(C|H|M|P|T|A)'  # build_group(application_and_haracteristics)  # 4
     category_group = build_group(category)  # 5
     inductance_group = '(R\d{2}|\dR\d|\d{3})'  # 6
     tolerance_group = build_group(tolerance)  # 7
