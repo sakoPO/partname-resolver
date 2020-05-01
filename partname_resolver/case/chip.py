@@ -11,8 +11,12 @@ class Chip:
                                       '0805': {'L': Length('0.8mm'), "W": Length('0.5mm')},
                                       '1005': {'L': Length('1.0mm'), "W": Length('0.5mm')},
                                       '1608': {'L': Length('1.6mm'), "W": Length('1.8mm')},
+                                      '2010': {'L': Length('2.0mm'), "W": Length('1.0mm')},
                                       '2520': {'L': Length('2.5mm'), "W": Length('2mm')},
-                                      '3216': {'L': Length('3.2mm'), "W": Length('1.6mm')}
+                                      '3216': {'L': Length('3.2mm'), "W": Length('1.6mm')},
+                                      '3225': {'L': Length('3.2mm'), "W": Length('2.5mm')},
+                                      '4516': {'L': Length('4.5mm'), "W": Length('1.6mm')},
+                                      '5050': {'L': Length('5mm'), "W": Length('5mm')}
                                       }
 
         def __init__(self, L, W, T, t1, t2):
@@ -48,6 +52,7 @@ class Chip:
                      '0504': '1310',
                      '0402': '1005',
                      '0603': '1608',
+                     '0804': '2010',
                      '0805': '2012',
                      '1008': '2520',
                      '1111': '2828',
@@ -55,7 +60,8 @@ class Chip:
                      '1210': '3225',
                      '1410': '3625',
                      '1515': '3838',
-                     '1806': '4516'
+                     '1806': '4516',
+                     '2020': '5050'
                      }
 
     def __init__(self, EIA_case_code, L=None, W=None, T=None, t1=None, t2=None):
