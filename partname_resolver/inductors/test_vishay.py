@@ -6,6 +6,7 @@ from partname_resolver.units.capacitanceTolerance import Tolerance
 from partname_resolver.case.chip import Chip
 from partname_resolver.units.length import Dimmension, Length, LengthTolerance
 
+
 class VishayDecoderTestCase(unittest.TestCase):
     def test_IHLP(self):
         part = inductors_partname_decoder.resolve('IHLP2525AEER1R0M01')
@@ -21,9 +22,9 @@ class VishayDecoderTestCase(unittest.TestCase):
                              dc_resistance=None,
                              rated_current=None,
                              self_resonant_frequency=None,
-                             max_working_voltage=None,
-                             case='1616AB',
-                             note=None)
+                             max_working_voltage='40V',
+                             case='2525',
+                             note='Commercial / High Saturation')
         self.assertEqual(component, part)
 
 
