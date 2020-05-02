@@ -49,8 +49,10 @@ class Inductor:
         return description
 
     def __repr__(self):
+        working_temperature = ' ' + str(self.working_temperature_range) if self.working_temperature_range is not None else ''
+        note = ' ' + self.note if self.note is not None else ''
         return self.manufacturer + " " + self.partnumber + " " + str(self.inductance) + " " + str(self.tolerance) + \
-               " " + str(self.case)
+               working_temperature + " " + str(self.case) + note
 
     def __eq__(self, other):
         return self.type == other.type and self.manufacturer == other.manufacturer and \
