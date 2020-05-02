@@ -25,33 +25,20 @@ class Capacitance(Unit):
                 'fF': Decimal('0.000000000000001')}
 
     def __init__(self, capacitance):
-        super().__init__("Farad")
         if isinstance(capacitance, Decimal):
-            self.capacitance = capacitance
+            value = capacitance
         elif isinstance(capacitance, str):
-            self.capacitance = self.__convert_str_capacitance_to_decimal_farads(capacitance)
+            value = self.__convert_str_capacitance_to_decimal_farads(capacitance)
         else:
             print(capacitance)
             raise TypeError(capacitance)
-
-    def get_value(self):
-        return self.capacitance
-
-    def get_value_as(self, prefix):
-        """prefix can be 'pF', 'nF', 'mW' etc."""
-        return self.power / Capacitance.multiply[prefix]
-
-    def __str__(self):
-        return self.__convert_decimal_farads_to_string()
-
-    def __repr__(self):
-        return self.__convert_decimal_farads_to_string()
+        super().__init__("Farad", 'F', value)
 
     def __eq__(self, other):
         if isinstance(other, str):
-            return self.capacitance == self.__convert_str_capacitance_to_decimal_farads(other)
+            return self.value == self.__convert_str_capacitance_to_decimal_farads(other)
         if isinstance(other, Capacitance):
-            return self.capacitance == other.capacitance
+            return self.value == other.value
 
     @staticmethod
     def __convert_str_capacitance_to_decimal_farads(capacitance):
@@ -74,13 +61,6 @@ class Capacitance(Unit):
         except:
             print(capacitance)
             raise
-
-    def __convert_decimal_farads_to_string(self):
-        for key in ['fF', 'pF', 'nF', 'uF', 'mF', 'F', 'kF', 'MF', 'GF']:
-            value = self.capacitance / Capacitance.multiply[key]
-            if Decimal('1000.0') > value >= Decimal('0.0'):
-                value = value.quantize(Decimal('.01'))
-                return str(value).rstrip('0').rstrip('.') + str(key)
 
 
 class CapacitanceRange:

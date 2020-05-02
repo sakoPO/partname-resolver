@@ -7,18 +7,13 @@ class Length(Unit):
     def __init__(self, length):
         if isinstance(length, str):
             if length.find("mm") != -1:
-                self.length = Decimal(length.replace("mm", ""))
+                self.length = Decimal(length.replace("mm", "")) / Decimal('1000')
             else:
                 raise ValueError
         else:
             self.length = length
         super().__init__("Length", 'm', self.length)
-
-    def __str__(self):
-        return str(self.length) + 'mm'
-
-    def __eq__(self, other):
-        return self.length == other.length
+        self.str_conversion_prefixes = ['m', '-', 'k']
 
 
 class LengthTolerance:

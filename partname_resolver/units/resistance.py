@@ -1,8 +1,9 @@
 from decimal import Decimal
+from .unit_base import Unit
 import re
 
 
-class Resistance:
+class Resistance(Unit):
     multiply = {u'G': Decimal('1000000000'),
                 u'G\u03a9': Decimal('1000000000'),
                 u'GR': Decimal('1000000000'),
@@ -22,7 +23,6 @@ class Resistance:
                 u'uR': Decimal('0.000001')}
 
     def __init__(self, resistance):
-        self.name = "Ohm"
         if isinstance(resistance, Decimal):
             self.resistance = resistance
         elif isinstance(resistance, str):
@@ -30,15 +30,8 @@ class Resistance:
         else:
             print(resistance)
             raise TypeError
-
-    def get_value(self):
-        return self.resistance
-
-    def __str__(self):
-        return self.__convert_decimal_ohm_to_string()
-
-    def __repr__(self):
-        return self.__convert_decimal_ohm_to_string()
+        super().__init__("Watt", '\u03a9', self.resistance)
+        self.str_conversion_prefixes = ['u', 'm', '-', 'k', 'M', 'G']
 
     def __eq__(self, other):
         if isinstance(other, str):
@@ -68,12 +61,3 @@ class Resistance:
         except:
             print("Unable to convert resistance: " + resistance)
             raise
-
-    def __convert_decimal_ohm_to_string(self):
-        if self.resistance == Decimal('0'):
-            return u'0\u03a9'
-        for key in ['u\u03a9', 'm\u03a9', '\u03a9', 'k\u03a9', 'M\u03a9', 'G\u03a9']:
-            value = self.resistance / Resistance.multiply[key]
-            if value < Decimal('1000.0') and value >= Decimal('0.0'):
-                value = value.quantize(Decimal('.01'))
-                return str(value).rstrip('0').rstrip('.') + str(key)

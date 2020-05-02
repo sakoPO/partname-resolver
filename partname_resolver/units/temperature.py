@@ -5,21 +5,9 @@ from .unit_base import Unit
 
 class Temperature(Unit):
     def __init__(self, temperature):
-        #self.name = "Celsius"
-        if isinstance(temperature, str):
-            self.temperature = Decimal(temperature)
-        else:
-            self.temperature = Decimal(temperature)
-        super().__init__("Celsius", u"\u2103", self.temperature)
+        super().__init__("Celsius", u"\u2103", Decimal(temperature))
 
-    def get_value(self):
-        return self.temperature
 
-    def __eq__(self, other):
-        return self.temperature == other.temperature
-
-    def __str__(self):
-        return str(self.temperature) + u"\u2103"
 
 
 class TemperatureRange(RangeBase):

@@ -26,12 +26,12 @@ class PowerTestCase(unittest.TestCase):
         self.assertEqual(Power("1m5").get_value(), Decimal('1.5') * Decimal('1E-3'))
 
     def test_Power_to_str_conversion(self):
-        self.assertEqual(str(Power(Decimal('2.2E6'))), "2.2MW")
-        self.assertEqual(str(Power(Decimal('4E3'))), "4kW")
-        self.assertEqual(str(Power(Decimal('100'))), "100W")
-        self.assertEqual(str(Power(Decimal('100E-3'))), "100mW")
-        self.assertEqual(str(Power(Decimal('100E-6'))), "100uW")
-        self.assertEqual(str(Power(Decimal('100E-9'))), "0.1uW")
+        self.assertEqual("2.2MW", str(Power(Decimal('2.2E6'))))
+        self.assertEqual("4kW", str(Power(Decimal('4E3'))))
+        self.assertEqual("100W", str(Power(Decimal('100'))))
+        self.assertEqual("100mW", str(Power(Decimal('100E-3'))))
+        self.assertEqual("100uW", str(Power(Decimal('100E-6'))))
+        self.assertEqual("0.1uW", str(Power(Decimal('100E-9'))))
 
     def test_equality(self):
         self.assertEqual(Power(Decimal('100')), Power(Decimal('100')))

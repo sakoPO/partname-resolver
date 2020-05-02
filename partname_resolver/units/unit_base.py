@@ -8,6 +8,7 @@ class Unit:
                 'M': Decimal('1000000'),
                 'k': Decimal('1000'),
                 '-': Decimal('1'),
+                'unitSymbol': Decimal('1'),
                 'm': Decimal('0.001'),
                 'u': Decimal('0.000001'),
                 u"\u00B5": Decimal('0.000001'),
@@ -29,6 +30,7 @@ class Unit:
                                   'femto': 'f'}
 
     def __init__(self, name, symbol, value):
+        self.str_conversion_prefixes = ['f', 'p', 'n', 'u', 'm', 'unitSymbol', 'k', 'M', 'G']
         self.name = name
         self.symbol = symbol
         self.value = value
@@ -83,12 +85,18 @@ class Unit:
     def __repr__(self):
         return self.__convert_value_to_string()
 
+    def __eq__(self, other):
+        return self.value == other.value
+
     def __convert_value_to_string(self):
         if self.value == Decimal(0):
             return "0" + self.symbol
-        for key in ['f', 'p', 'n', 'u', 'm', 'unitSymbol', 'k', 'M', 'G']:
-            value = self.value / self.multiply[key]
-            if Decimal('1000.0') > value >= Decimal('0.0'):
+        for key in self.str_conversion_prefixes:
+            value = self.value / Unit.multiply[key]
+            if Decimal('1000.0') > abs(value) >= Decimal('0.0'):
                 value = value.quantize(Decimal('.01'))
-                unit_symbol = str(key) + self.symbol if str(key) != 'unitSymbol' else self.symbol
+                if key != 'unitSymbol' and str(key) != '-':
+                    unit_symbol = key + self.symbol
+                else:
+                    unit_symbol = self.symbol
                 return str(value).rstrip('0').rstrip('.') + unit_symbol

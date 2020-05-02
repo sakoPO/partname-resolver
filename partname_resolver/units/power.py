@@ -17,7 +17,6 @@ class Power(Unit):
                 u'uW': Decimal('0.000001')}
 
     def __init__(self, power):
-        super().__init__("Watt")
         if isinstance(power, Decimal):
             self.power = power
         elif isinstance(power, str):
@@ -25,19 +24,8 @@ class Power(Unit):
         else:
             print(power)
             raise TypeError
-
-    def get_value(self):
-        return self.power
-
-    def get_value_as(self, prefix):
-        """prefix can be 'mW', 'W', 'kW' etc."""
-        return self.power / Power.multiply[prefix]
-
-    def __str__(self):
-        return self.__convert_decimal_power_to_string()
-
-    def __repr__(self):
-        return self.__convert_decimal_power_to_string()
+        super().__init__("Watt", 'W', self.power)
+        self.str_conversion_prefixes = ['u', 'm', '-', 'k', 'M', 'G']
 
     def __eq__(self, other):
         if isinstance(other, str):
@@ -65,12 +53,3 @@ class Power(Unit):
         except:
             print("Unable to convert power: " + power)
             raise
-
-    def __convert_decimal_power_to_string(self):
-        if self.power == Decimal('0'):
-            return u'0W'
-        for key in ['uW', 'mW', 'W', 'kW', 'MW', 'GW']:
-            value = self.power / Power.multiply[key]
-            if value < Decimal('1000.0') and value >= Decimal('0.0'):
-                value = value.quantize(Decimal('.01'))
-                return str(value).rstrip('0').rstrip('.') + str(key)
