@@ -1,5 +1,5 @@
 from .common import *
-from .resistor import Resistor
+from partname_resolver.components.resistor import Resistor
 from partname_resolver.units.resistanceTolerance import Tolerance
 from ..units.temperature import TemperatureRange
 import re

@@ -1,8 +1,7 @@
 from .common import *
-from .resistor import Resistor
+from partname_resolver.components.resistor import Resistor
 from partname_resolver.units.resistanceTolerance import Tolerance
 from ..units.temperature import TemperatureRange
-from ..units.resistance import Resistance
 import re
 from decimal import Decimal
 
