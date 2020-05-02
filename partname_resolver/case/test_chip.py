@@ -1,5 +1,5 @@
 import unittest
-from .chip import Chip
+from partname_resolver.case.chip import Chip
 from partname_resolver.units.length import Dimmension, Length, LengthTolerance
 
 
@@ -7,7 +7,7 @@ class ChipTestCase(unittest.TestCase):
     def test_chip_name(self):
         self.assertEqual("EIA 0402, H=0.35", str(Chip('0402', L=1, W=0.5, T=0.35, t1=0.25, t2=0.2)))
         self.assertEqual("EIA 0402", str(Chip('0402')))
-        self.assertEqual("EIA 0402, IEC/EN 1005, L=1.0mm, W=0.5mm, T=1±0.1mm", Chip('0402', T=Dimmension('1mm', LengthTolerance('0.1mm'))).get_full_str())
+        self.assertEqual("EIA 0402, IEC/EN 1005, L=1mm, W=0.5mm, T=1±0.1mm", Chip('0402', T=Dimmension('1mm', LengthTolerance('0.1mm'))).get_full_str())
 
     def test_custom_dimmensions(self):
         tolerance = LengthTolerance('0.1mm')
