@@ -1,5 +1,5 @@
 from partname_resolver.components.inductor import Inductor
-from partname_resolver.units.capacitanceTolerance import Tolerance
+from partname_resolver.units.inductanceTolerance import Tolerance
 from partname_resolver.units.temperature import TemperatureRange
 from partname_resolver.inductors.common import *
 from partname_resolver.units.length import Dimmension, Length, LengthTolerance
@@ -17,7 +17,7 @@ size_code = {'D0520': 'D0520',
              'D0624': 'D0624',
              'D0630': 'D0630',
              'D0650': 'D0650',
-             'D0830': 'D0830',
+             'D0830': '3431',
              'D0840': 'D0840',
              'D1040': 'D1040',
              'D1235': 'D1235',
@@ -30,7 +30,7 @@ size_code = {'D0520': 'D0520',
              '0630': '0630',
              '0645': '0645',
              '0654': '0654',
-             '1054': '1054'}
+             '1054': '4539'}
 
 
 def build_regexpr():
@@ -48,7 +48,7 @@ def decode_match(match):
     return Inductor(inductor_type=Inductor.Type.WireWoundInductor,
                     manufacturer="Kemet",
                     partnumber=partnumber,
-                    working_temperature_range=TemperatureRange('-55', '125'),
+                    working_temperature_range=TemperatureRange('-55', '155'),
                     series=match.group(1),
                     inductance=inductance_string_to_henry(match.group(5)) * Decimal(1000000),
                     tolerance=Tolerance('20%'),

@@ -1,4 +1,4 @@
-from partname_resolver.units.capacitanceTolerance import Tolerance
+from partname_resolver.units.inductanceTolerance import Tolerance
 from partname_resolver.case.chip import Chip
 from partname_resolver.units.length import Dimmension, Length, LengthTolerance
 

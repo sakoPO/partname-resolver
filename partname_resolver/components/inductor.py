@@ -1,5 +1,5 @@
 from enum import Enum
-from partname_resolver.units.resistanceTolerance import Tolerance
+from partname_resolver.units.inductanceTolerance import Tolerance
 from partname_resolver.units.inductance import Inductance
 
 
@@ -16,7 +16,10 @@ class Inductor:
         self.partnumber = partnumber  # should be moved to components common base class
         self.working_temperature_range = working_temperature_range  # should be moved to components common base class
         self.series = series
-        self.inductance = Inductance(inductance)
+        if inductance is not None:
+            self.inductance = inductance if isinstance(inductance, Inductance) else Inductance(inductance)
+        else:
+            self.inductance = None
         self.tolerance = tolerance
         self.q = q
         self.dc_resistance = dc_resistance
@@ -34,19 +37,50 @@ class Inductor:
             description = prefix[self.type]
         else:
             description = "Inductor"
-        description += ' ' + str(self.inductance)
+        if self.inductance is not None:
+            description += ' ' + str(self.inductance)
         if isinstance(self.tolerance, Tolerance):
             description += ' ' + str(self.tolerance)
         if self.rated_current is not None:
             description += ' ' + str(self.rated_current)
         if self.dc_resistance is not None:
-            description += ' ' + self.dc_resistance
+            description += ' ' + str(self.dc_resistance)
         if self.q is not None:
-            description += ' ' + self.q
+            description += ' Q=' + self.q
         if self.working_temperature_range is not None:
             description += ' ' + str(self.working_temperature_range)
         description += ' ' + str(self.case)
         return description
+
+    def merge(self, other):
+        if self.type is None:
+            self.type = other.type
+        if self.manufacturer is None:
+            self.manufacturer = other.manufacturer  # should be moved to components common base class
+        if self.partnumber is None:
+            self.partnumber = other.partnumber  # should be moved to components common base class
+        if self.working_temperature_range is None:
+            self.working_temperature_range = other.working_temperature_range  # should be moved to components common base class
+        if self.series is None:
+            self.series = other.series
+        if self.inductance is None:
+            self.inductance = other.inductance
+        if self.tolerance is None:
+            self.tolerance = other.tolerance
+        if self.q is None:
+            self.q = other.q
+        if self.dc_resistance is None:
+            self.dc_resistance = other.dc_resistance
+        if self.rated_current is None:
+            self.rated_current = other.rated_current
+        if self.self_resonant_frequency is None:
+            self.self_resonant_frequency = other.self_resonant_frequency
+        if self.max_working_voltage is None:
+            self.max_working_voltage = other.max_working_voltage
+        if self.case is None:
+            self.case = other.case
+        if self.note is None:
+            self.note = other.note
 
     def __repr__(self):
         working_temperature = ' ' + str(self.working_temperature_range) if self.working_temperature_range is not None else ''

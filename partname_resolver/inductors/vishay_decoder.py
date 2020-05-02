@@ -1,5 +1,5 @@
 from partname_resolver.components.inductor import Inductor
-from partname_resolver.units.capacitanceTolerance import Tolerance
+from partname_resolver.units.inductanceTolerance import Tolerance
 from partname_resolver.units.temperature import TemperatureRange
 from partname_resolver.inductors.common import *
 from partname_resolver.units.length import Dimmension, Length, LengthTolerance
