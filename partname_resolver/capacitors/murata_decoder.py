@@ -1,5 +1,5 @@
 # based on https://search.murata.co.jp/Ceramy/image/img/A01X/partnumbering_e_02.pdf
-from .capacitor import Capacitor
+from partname_resolver.components.capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
 from ..units.temperature import TemperatureRange
 from ..units.capacitance import CapacitanceRange, Capacitance

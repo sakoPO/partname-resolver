@@ -1,5 +1,5 @@
 from .common import *
-from .capacitor import Capacitor
+from partname_resolver.components.capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
 from ..units.temperature import TemperatureRange
 import re

@@ -1,6 +1,6 @@
 from partname_resolver import partname_resolver
 from partname_resolver.resistors.resistor import Resistor
-from partname_resolver.capacitors.capacitor import Capacitor
+from partname_resolver.components.capacitor import Capacitor
 
 
 def find_capacitor():

@@ -1,8 +1,8 @@
 import unittest
 from partname_resolver.capacitors import capacitors_partname_decoder
-from partname_resolver.capacitors.capacitor import Capacitor
+from partname_resolver.components.capacitor import Capacitor
 from partname_resolver.units.temperature import TemperatureRange
-from partname_resolver.units.capacitance import CapacitanceRange, Capacitance
+from partname_resolver.units.capacitance import CapacitanceRange
 
 
 class TestMurataCapacitorPartnameResolver(unittest.TestCase):

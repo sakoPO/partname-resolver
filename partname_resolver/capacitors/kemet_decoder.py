@@ -1,6 +1,5 @@
 # http://www.kemet.com/Lists/FileStore/f2097g.pdf
-from .common import capacitance_string_to_farads
-from .capacitor import Capacitor
+from partname_resolver.components.capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
 from ..units.temperature import TemperatureRange
 import re

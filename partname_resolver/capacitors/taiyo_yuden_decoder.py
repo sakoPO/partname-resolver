@@ -1,6 +1,6 @@
 # based on https://www.yuden.co.jp/productdata/catalog/mlcc_all_e.pdf
 
-from .capacitor import Capacitor
+from partname_resolver.components.capacitor import Capacitor
 from partname_resolver.units.capacitanceTolerance import Tolerance
 from ..units.temperature import TemperatureRange
 from .common import *
