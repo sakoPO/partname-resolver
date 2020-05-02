@@ -1,8 +1,9 @@
 from decimal import Decimal
+from .range_base import RangeBase
 from partname_resolver.units.capacitance import Capacitance
 
 
-class Tolerance:
+class Tolerance(RangeBase):
     def __init__(self, tolerance_min, tolerance_max=None):
         if tolerance_max is None:
             if tolerance_min.find('%') != -1:

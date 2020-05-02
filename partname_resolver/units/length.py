@@ -5,7 +5,6 @@ import re
 
 class Length(Unit):
     def __init__(self, length):
-        super().__init__("Length")
         if isinstance(length, str):
             if length.find("mm") != -1:
                 self.length = Decimal(length.replace("mm", ""))
@@ -13,6 +12,7 @@ class Length(Unit):
                 raise ValueError
         else:
             self.length = length
+        super().__init__("Length", 'm', self.length)
 
     def __str__(self):
         return str(self.length) + 'mm'

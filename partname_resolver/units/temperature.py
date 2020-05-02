@@ -1,14 +1,16 @@
 from decimal import Decimal
 from .range_base import RangeBase
+from .unit_base import Unit
 
 
-class Temperature:
+class Temperature(Unit):
     def __init__(self, temperature):
-        self.name = "Celsius"
+        #self.name = "Celsius"
         if isinstance(temperature, str):
             self.temperature = Decimal(temperature)
         else:
             self.temperature = Decimal(temperature)
+        super().__init__("Celsius", u"\u2103", self.temperature)
 
     def get_value(self):
         return self.temperature

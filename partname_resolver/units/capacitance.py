@@ -37,6 +37,10 @@ class Capacitance(Unit):
     def get_value(self):
         return self.capacitance
 
+    def get_value_as(self, prefix):
+        """prefix can be 'pF', 'nF', 'mW' etc."""
+        return self.power / Capacitance.multiply[prefix]
+
     def __str__(self):
         return self.__convert_decimal_farads_to_string()
 

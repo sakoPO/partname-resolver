@@ -25,29 +25,20 @@ class Inductance(Unit):
                 'fH': Decimal('0.000000000000001')}
 
     def __init__(self, inductance):
-        super().__init__("Henry")
         if isinstance(inductance, Decimal):
-            self.inductance = inductance
+            ind = inductance
         elif isinstance(inductance, str):
-            self.inductance = self.__convert_str_inductance_to_decimal_farads(inductance)
+            ind = self.__convert_str_inductance_to_decimal_farads(inductance)
         else:
             print(inductance)
             raise TypeError(inductance)
-
-    def get_value(self):
-        return self.inductance
-
-    def __str__(self):
-        return self.__convert_decimal_henry_to_string()
-
-    def __repr__(self):
-        return self.__convert_decimal_henry_to_string()
+        super().__init__("Henry",  'H', ind)
 
     def __eq__(self, other):
         if isinstance(other, str):
-            return self.inductance == self.__convert_str_inductance_to_decimal_farads(other)
+            return self.value == self.__convert_str_inductance_to_decimal_farads(other)
         if isinstance(other, Inductance):
-            return self.inductance == other.inductance
+            return self.value == other.value
 
     @staticmethod
     def __convert_str_inductance_to_decimal_farads(inductance):
@@ -71,11 +62,4 @@ class Inductance(Unit):
             print(inductance)
             raise
 
-    def __convert_decimal_henry_to_string(self):
-        if self.inductance == Decimal(0):
-            return "0H"
-        for key in ['fH', 'pH', 'nH', 'uH', 'mH', 'H', 'kH', 'MH', 'GH']:
-            value = self.inductance / Inductance.multiply[key]
-            if Decimal('1000.0') > value >= Decimal('0.0'):
-                value = value.quantize(Decimal('.01'))
-                return str(value).rstrip('0').rstrip('.') + str(key)
+
