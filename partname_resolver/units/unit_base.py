@@ -1,6 +1,6 @@
 from decimal import Decimal
 from math import log10
-
+import re
 
 class Unit:
     multiply = {'T': Decimal('1000000000000'),
@@ -100,3 +100,26 @@ class Unit:
                 else:
                     unit_symbol = self.symbol
                 return str(value).rstrip('0').rstrip('.') + unit_symbol
+
+    @staticmethod
+    def __convert_str_to_decimal_value(str_value, unit_symbol):
+        """Convert string ie: 100nH to value in henry of type Decimal"""
+        str_value = str_value.replace(unit_symbol, '')
+        try:
+            separated_value = re.split('(\d+)', str_value)
+            if separated_value[-1] in Unit.multiply:
+                multiplier = Unit.multiply[separated_value[-1]]
+                value = Decimal(str_value.replace(separated_value[-1], ''))
+                value = value * multiplier
+                return value
+            else:
+                for i, chunk in enumerate(separated_value):
+                    if chunk in Unit.multiply:
+                        multiplier = Unit.multiply[chunk]
+                        str_value = Decimal(str_value.replace(chunk, '.'))
+                        str_value = str_value * multiplier
+                        return str_value
+                return Decimal(str_value)
+        except:
+            print(str_value)
+            raise
